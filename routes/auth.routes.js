@@ -79,7 +79,13 @@ router.post(
 );
 
 router.get('/login', isLoggedOut, (req, res, next) => {
-  res.render('auth/login');
+  axios
+    .get('https://wger.de/api/v2/exerciseimage/')
+    .then((api) => {
+      console.log(api.data.results);
+      res.render('auth/login', { api });
+    })
+    .catch((err) => console.log(err));
 });
 
 router.post('/login', isLoggedOut, (req, res, next) => {

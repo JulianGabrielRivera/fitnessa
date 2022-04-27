@@ -26,6 +26,31 @@
     <button type='submit'>Login</button>
 
   </form>
+  <div>
+    <i class='fa-brands fa-twitter social'></i>
+    <i class='fa-brands fa-facebook social'></i>
+    <i class='fa-brands fa-instagram social'></i>
+
+  </div>
+
+  <footer>
+    <nav>
+      <li>Fitnessa</li>
+      <li>Apparel</li>
+      <li>Privacy</li>
+      <li>Terms</li>
+      <li>Support</li>
+      <li>&copy 2022 Fitnessa, Inc. All rights reserved.</li>
+    </nav>
+
+  </footer>
+  <div class='api_container'>
+
+    {{#each api.data.results}}
+
+      <img src='{{image}}' alt='' class='api_img' />
+    {{/each}}
+  </div>
 
 </div>
 {{! script here }}
