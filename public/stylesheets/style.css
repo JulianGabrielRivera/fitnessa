@@ -1,6 +1,14 @@
 body {
   background-color: #201c2b;
   color: white;
+  font-family: 'Roboto', sans-serif;
+}
+
+.header_container {
+  height: 150px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .main_h1 {
@@ -135,4 +143,22 @@ nav a {
   flex-direction: column;
   margin-right: 30px;
   align-items: center;
+}
+
+.carousel_img {
+  width: 100vh;
+
+  /* height: 1000px;
+  width: 1000px; */
+}
+
+footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 150px;
+}
+footer nav li {
+  list-style-type: none;
+  margin-right: 20px;
 }
