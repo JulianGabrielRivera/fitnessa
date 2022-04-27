@@ -1,0 +1,48 @@
+<form id='search'>
+
+  <input type='text' placeholder='Search for...' />
+</form>
+<div class='usersContainer'>
+  {{#each userInfo}}
+    <div class='card'>
+      <img src='{{image}}' alt='' class='profile_img' data-user-id='{{_id}}' />
+      <h2 class='search-name'>{{name}}</h2>
+      <img
+        src='/images/heart1.png'
+        alt=''
+        class='heart_img'
+        data-user-id='{{_id}}'
+      />
+      <p class='likes'><span>{{likedMe}}</span> likes </p>
+      {{!-- {{#each userInfoTwo}}
+        <form
+          action='/users/{{userInfo.id}}'
+          method='POST'
+          class='comment_container'
+        > --}}
+      <a href='/users/{{_id}}/comment'>Comment</a>
+
+      {{!-- 
+      <form action='/users/{{_id}}/comment' method='POST'>
+        <button>Comment</button>
+      </form> --}}
+
+      {{! <label>Username:</label>
+  <input type='text' name='name' /> }}
+      {{!-- 
+          <input type='text' name='postName' value='{{name.name}}' hidden />
+          <textarea name='content' cols='30' rows='2'></textarea>
+
+          <button type='submit'>Comment</button>
+
+        </form> --}}
+
+    </div>
+
+  {{/each}}
+
+</div>
+
+<script src='/js/views/users/user-profile.js'></script>
+
+<script src='https://unpkg.com/axios/dist/axios.min.js'></script>

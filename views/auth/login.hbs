@@ -1,0 +1,31 @@
+<div class='main_container'>
+  <form action='/login' method='POST' class='form_container'>
+    <h2>Login</h2>
+    <div class='email_and_password'>
+
+      <div>
+        <label for='myEmail'>Email:</label>
+
+        <input id='myEmail' type='email' name='email' placeholder='Email' />
+      </div>
+      <div>
+        <label for='myPassword'>Password:</label>
+        <input
+          id='myPassword'
+          type='password'
+          name='password'
+          placeholder='Password'
+        />
+      </div>
+
+      {{#if errorMessage}}
+        <p class='error'>{{errorMessage}}</p>
+      {{/if}}
+    </div>
+
+    <button type='submit'>Login</button>
+
+  </form>
+
+</div>
+{{! script here }}

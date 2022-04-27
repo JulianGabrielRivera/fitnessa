@@ -1,0 +1,32 @@
+{{!-- <div class='api_container'>
+
+  {{#each api.data.results}}
+
+    <img src='{{image}}' alt='' class='api_img' />
+  {{/each}}
+</div> --}}
+
+{{!-- 
+<div class='api_container'>
+
+  {{#each api.data}}
+
+    <img src='{{gifUrl}}' alt='' class='api_img' />
+  {{/each}}
+</div> --}}
+<form id='search'>
+
+  <input type='text' placeholder='Search for...' />
+</form>
+<div class='gym_workouts_container'>
+  {{#each api.data}}
+    <div class='workout_card'>
+
+      <h1>{{equipment}}</h1>
+      <img src='{{gifUrl}}' alt='' />
+    </div>
+  {{/each}}
+
+</div>
+
+<script src='/js/views/users/workouts.js'></script>
