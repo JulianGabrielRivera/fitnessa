@@ -101,7 +101,6 @@ section#body_transformations img {
 .profile_img {
   height: 300px;
   width: 300px;
-  border-radius: 50%;
 }
 
 .myProfile {
@@ -166,13 +165,11 @@ section#body_transformations img {
 }
 
 .carousel_img {
-  width: 90vh;
-  height: 1000px;
-  object-fit: contain;
-
-  /* height: 1000px;
-  width: 1000px; */
+  height: 700px;
+  padding-left: 50px;
+  padding-right: 50px;
 }
+
 section#app_details {
   display: flex;
   justify-content: space-evenly;
@@ -202,6 +199,10 @@ section#app_details div {
 #blogs img {
   height: 280px;
   width: 477px;
+}
+
+.hidden {
+  display: none;
 }
 
 footer {

@@ -6,7 +6,7 @@ const userSchema = new Schema(
     time: String,
     image: String,
     //  user can store other user ids
-    likes: [{ type: Schema.Types.ObjectId, ref: 'User', unique: true }],
+    likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     likedMe: { type: Number, default: 0 },
     email: {
       type: String,

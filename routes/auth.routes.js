@@ -21,7 +21,7 @@ router.post(
   isLoggedOut,
   fileUploader.single('profile-image'),
   (req, res, next) => {
-    const { email, password, name, time, list, likedMe } = req.body;
+    const { email, password, name, time } = req.body;
 
     if (!email || !password) {
       const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
@@ -51,8 +51,6 @@ router.post(
         name,
         time,
         image: req.file.path,
-        list,
-        likedMe,
       })
         .then((userInfo) => {
           // console.log('new user', userInfo);
@@ -126,8 +124,32 @@ router.get('/myprofile', isLoggedIn, (req, res, next) => {
 
 router.get('/users', isLoggedIn, (req, res, next) => {
   User.find()
-    .then((userInfo) => {
+    .lean()
+    .then((userInfoArray) => {
       // console.log(userInfo);
+      let userInfo = userInfoArray.map((user) => {
+        //  our personal likes array
+        // everything happening in if statement
+        let myLikesArray = req.session.currentUser.likes;
+        console.log(myLikesArray);
+        let myLikesArrayStrings = myLikesArray.map((like) => String(like));
+        console.log(myLikesArrayStrings, user._id, String(user._id));
+        let matchLike = myLikesArrayStrings.includes(String(user._id));
+        console.log(matchLike);
+
+        if (matchLike) {
+          // match array of user likes to all users
+
+          return { ...user, isLiked: true };
+        } else {
+          return { ...user, isLiked: false };
+        }
+      });
+      console.log(userInfo);
+      userInfo = userInfo.filter(
+        (user) => String(req.session.currentUser._id) != String(user._id)
+      );
+
       res.render('users/user-profile', { userInfo });
     })
     .catch((err) => {
@@ -217,18 +239,13 @@ router.post('/like/:id', (req, res, next) => {
   User.findByIdAndUpdate(
     req.session.currentUser._id,
     {
-      // instead of pushing find by id and remove it find what index its at and remove.
       $push: { likes: id },
     },
     { new: true }
   )
     .then((updatedUser) => {
       req.session.currentUser = updatedUser;
-      User.findByIdAndUpdate(
-        id,
-        { $inc: { $max: { likedMe: 1 } } },
-        { new: true }
-      )
+      User.findByIdAndUpdate(id, { $inc: { likedMe: 1 } }, { new: true })
         .then((likedUser) => {
           res.json({ success: true, likedUser });
         })
@@ -244,23 +261,20 @@ router.post('/like/:id', (req, res, next) => {
 });
 router.post('/unlike/:id', (req, res, next) => {
   const { id } = req.params;
-  User.findByIdAndRemove(
+
+  User.findByIdAndUpdate(
     req.session.currentUser._id,
     {
       // instead of pushing find by id and remove it find what index its at and remove.
-      id,
+      $pull: { likes: id },
     },
     { new: true }
   )
     .then((updatedUser) => {
       req.session.currentUser = updatedUser;
-      User.findByIdAndUpdate(
-        id,
-        { $inc: { $max: { likedMe: -1 } } },
-        { new: true }
-      )
-        .then((likedUser) => {
-          res.json({ success: true, likedUser });
+      User.findByIdAndUpdate(id, { $inc: { likedMe: -1 } }, { new: true })
+        .then((unlikedUser) => {
+          res.json({ success: true, unlikedUser });
         })
         .catch((err) => {
           console.log(err);

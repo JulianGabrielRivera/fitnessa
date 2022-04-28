@@ -4,15 +4,25 @@
 </form>
 <div class='usersContainer'>
   {{#each userInfo}}
-    <div class='card'>
+    <div class='user'>
       <img src='{{image}}' alt='' class='profile_img' data-user-id='{{_id}}' />
       <h2 class='search-name'>{{name}}</h2>
+      {{! opposite of if statement }}
+
       <img
         src='/images/heart1.png'
         alt=''
-        class='heart_img'
+        class='{{#if isLiked}}hidden{{/if}} heart_img'
         data-user-id='{{_id}}'
       />
+
+      <img
+        src='/images/unlikeheart.png'
+        alt=''
+        class='{{#unless isLiked}}hidden{{/unless}} heart_img2'
+        data-user-id='{{_id}}'
+      />
+
       <p class='likes'><span>{{likedMe}}</span> likes </p>
       {{!-- {{#each userInfoTwo}}
         <form
