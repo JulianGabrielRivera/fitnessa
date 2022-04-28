@@ -166,14 +166,42 @@ section#body_transformations img {
 }
 
 .carousel_img {
-  width: 100vh;
+  width: 90vh;
+  height: 1000px;
+  object-fit: contain;
 
   /* height: 1000px;
   width: 1000px; */
 }
-
+section#app_details {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 80px;
+}
+section#app_details p {
+  font-size: 1.3rem;
+}
+.quote {
+  width: 600px;
+}
+.card-body {
+  background-color: #201c2b;
+}
+/* 
+section#app_details div {
+  width: 200px;
+} */
 .workout_gifs {
   border-radius: 50%;
+}
+.multiple_img {
+  height: 425px;
+  width: 800px;
+}
+
+#blogs img {
+  height: 280px;
+  width: 477px;
 }
 
 footer {
