@@ -11,7 +11,7 @@ const cookieParser = require('cookie-parser');
 
 // ℹ️ Serves a custom favicon on each request
 // https://www.npmjs.com/package/serve-favicon
-const favicon = require('serve-favicon');
+// const favicon = require('serve-favicon');
 
 // ℹ️ global package used to `normalize` paths amongst different operating systems
 // https://www.npmjs.com/package/path
