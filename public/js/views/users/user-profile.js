@@ -2,11 +2,10 @@ const heartImg = document.querySelectorAll('.heart_img');
 const heartImg2 = document.querySelectorAll('.heart_img2');
 const likes = document.querySelectorAll('.user p span');
 const profileImg = document.querySelectorAll('.profile_img');
+const searchBar = document.getElementById('search');
+const userProfiles = document.querySelectorAll('.user');
 console.log(profileImg);
 console.log(heartImg2);
-
-//  if they have a like in array id
-// let counter = 0;
 
 let isSending = false;
 for (let i = 0; i < heartImg.length; i++) {
@@ -17,21 +16,7 @@ for (let i = 0; i < heartImg.length; i++) {
         .post(`/like/${heartImg[i].dataset.userId}`)
         .then((response) => {
           if (response.data.success) {
-            // total number of people that like dthem
             likes[i].textContent = response.data.likedUser.likedMe;
-            // remov e event listenerand attach one with a decrement event
-            // two hearts one showing and other one not, one will have increase event and other one decrement
-
-            // convert to number cause its in string format
-            // counter = counter + 1;
-            // if (counter === 0 || counter % 2 === 1) {
-            //   likes[i].textContent = Number(likes[i].textContent) + 1;
-            // }
-            // console.log(counter);
-
-            // if (counter % 2 === 0) {
-            //   likes[i].textContent = Number(likes[i].textContent) - 1;
-            // }
           }
 
           // console.log(response);
@@ -45,24 +30,7 @@ for (let i = 0; i < heartImg.length; i++) {
         });
     }
 
-    // axios call here to store id in an array within my user model
     console.log(heartImg[i].dataset.userId);
-    // axios.get('http://localhost:3000/myprofile').then((response) => {
-    //   console.log(response);
-    // });
-
-    // axios
-    //   .post('http://localhost:3000/myprofile')
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     // console.log(response.status);
-    //     // console.log(response.statusText);
-    //     // console.log(response.headers);
-    //     // console.log(response.config);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   });
 }
 //  page loads set to false by default then if you click it looks for if statement, if true it runs code inside if statement
@@ -95,43 +63,8 @@ for (let i = 0; i < heartImg2.length; i++) {
           console.log(err);
         });
     }
-    // axios
-    //   .post('http://localhost:3000/myprofile')
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     // console.log(response.status);
-    //     // console.log(response.statusText);
-    //     // console.log(response.headers);
-    //     // console.log(response.config);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   });
 }
-
-// axios
-//   .post(`unlike/${heartImg[i].dataset.userId}`)
-//   .then((response) => {
-//     if (response.data.success) {
-//       // total number of people that like dthem
-//       likes[i].textContent = response.data.likedUser.likedMe;
-//       // remov e event listenerand attach one with a decrement event
-//       // two hearts one showing and other one not, one will have increase event and other one decrement
-
-//       // convert to number cause its in string format
-//       // counter = counter + 1;
-//       // if (counter === 0 || counter % 2 === 1) {
-//       //   likes[i].textContent = Number(likes[i].textContent) + 1;
-//       // }
-//       // console.log(counter);
-
-//       // if (counter % 2 === 0) {
-//       //   likes[i].textContent = Number(likes[i].textContent) - 1;
-//       // }
-//     }
-//   })
-//   .catch((err) => console.log(err));
 
 profileImg.forEach((img) => {
   img.addEventListener('click', () => {
@@ -140,10 +73,19 @@ profileImg.forEach((img) => {
     });
   });
 });
-// {
-//   /* <a href='/users/{{userInSession._id}}/edit'>EDIT</a> */
-// }
 
-// {
-//   /* <a href='/users/{{userInSession._id}}/edit'>EDIT</a> */
-// }
+searchBar.addEventListener('keyup', (e) => {
+  console.log(e);
+  // we grab the input here and make it equal to loweracse, they are case sensitive.
+  const keyupValue = e.target.value.toLowerCase();
+  //  loop through our cards and access the h2 then put them to lowercase so it matches both upper/lower
+  userProfiles.forEach((userProfile) => {
+    // startswith gives us a boolean true or false
+    userProfile
+      .querySelector('h2')
+      .textContent.toLowerCase()
+      .startsWith(keyupValue)
+      ? (userProfile.style.display = 'block')
+      : (userProfile.style.display = 'none');
+  });
+});

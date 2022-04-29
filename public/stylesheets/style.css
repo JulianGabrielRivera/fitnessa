@@ -10,6 +10,15 @@ body {
   justify-content: space-evenly;
   align-items: center;
 }
+
+.logout_button {
+  background-color: #201c2b;
+  border: none;
+}
+.carousel_img {
+  height: 700px;
+  object-fit: contain;
+}
 form input {
   width: 500px;
 }
@@ -38,6 +47,10 @@ nav a {
   font-weight: bold;
   margin-left: 20px;
 }
+nav a:hover {
+  color: black;
+  text-decoration: none;
+}
 .main_container {
   height: 100vh;
   display: flex;
@@ -45,18 +58,6 @@ nav a {
   flex-direction: column;
   align-items: center;
   margin-top: 30px;
-}
-section#body_transformations {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 100px;
-}
-section#body_transformations img {
-  margin: 20px;
-  height: 400px;
-  width: 400px;
 }
 
 .form_container {
@@ -98,17 +99,13 @@ section#body_transformations img {
   color: white;
 }
 
-.profile_img {
-  height: 300px;
-  width: 300px;
-}
-
 .myProfile {
   display: flex;
   height: 100vh;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: 1px solid black;
 }
 .myProfile p {
   font-size: 1.5rem;
@@ -124,12 +121,39 @@ section#body_transformations img {
   justify-content: center;
   margin-top: 30px;
 }
-.usersContainer .card {
+.usersContainer .user {
   display: flex;
   flex-direction: column;
   margin-right: 30px;
+  margin-bottom: 60px;
+  border: 1px solid black;
+}
+.usersContainer .user h2 {
+  text-align: center;
+}
+.usersContainer .user a {
+  color: white;
+}
+
+.usersContainer .comment_form {
+  display: flex;
+  flex-direction: column;
+}
+.usersContainer .comment_button {
+  background-color: #201c2b;
+  margin-top: 20px;
+  border: none;
+}
+
+.profile_img {
+  height: 300px;
+  width: 300px;
 }
 .heart_img {
+  height: 30px;
+  width: 30px;
+}
+.heart_img2 {
   height: 30px;
   width: 30px;
 }
@@ -143,6 +167,7 @@ section#body_transformations img {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+
   justify-content: center;
   margin-top: 250px;
   height: 100vh;
@@ -164,12 +189,6 @@ section#body_transformations img {
   align-items: center;
 }
 
-.carousel_img {
-  height: 700px;
-  padding-left: 50px;
-  padding-right: 50px;
-}
-
 section#app_details {
   display: flex;
   justify-content: space-evenly;
@@ -180,6 +199,17 @@ section#app_details p {
 }
 .quote {
   width: 600px;
+}
+.main_container_edit {
+  height: 100vh;
+  display: flex;
+  /* justify-content: center; */
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}
+.main_container_edit button {
+  margin-top: 50px;
 }
 .card-body {
   background-color: #201c2b;
@@ -198,7 +228,8 @@ section#app_details div {
 
 #blogs img {
   height: 280px;
-  width: 477px;
+
+  object-fit: cover;
 }
 
 .hidden {
@@ -214,4 +245,35 @@ footer {
 footer nav li {
   list-style-type: none;
   margin-right: 20px;
+}
+
+.switch {
+  width: 60px;
+  height: 25px;
+  border-radius: 15px;
+  position: relative;
+  background-color: white;
+}
+
+.switch:after {
+  /* need this for content to appear */
+  content: '';
+  width: 17px;
+  height: 16px;
+  background: black;
+  position: absolute;
+  top: 2.7px;
+  left: 0.5px;
+  border-radius: 50%;
+}
+.lightmode {
+  background: white;
+  color: black;
+}
+.lightmode:after {
+  right: 0;
+  left: unset;
+}
+.text {
+  color: black;
 }

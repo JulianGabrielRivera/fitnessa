@@ -8,7 +8,7 @@ const Comment = require('../models/Comment.model');
 const axios = require('axios');
 router.get('/signup', isLoggedOut, (req, res, next) => {
   axios
-    .get('https://wger.de/api/v2/exerciseimage/')
+    .get('https://wger.de/api/v2/exerciseimage/?limit=19')
     .then((api) => {
       console.log(api.data.results);
       res.render('auth/signup', { api });
@@ -78,7 +78,7 @@ router.post(
 
 router.get('/login', isLoggedOut, (req, res, next) => {
   axios
-    .get('https://wger.de/api/v2/exerciseimage/')
+    .get('https://wger.de/api/v2/exerciseimage/?limit=19')
     .then((api) => {
       console.log(api.data.results);
       res.render('auth/login', { api });
@@ -130,6 +130,7 @@ router.get('/users', isLoggedIn, (req, res, next) => {
       let userInfo = userInfoArray.map((user) => {
         //  our personal likes array
         // everything happening in if statement
+
         let myLikesArray = req.session.currentUser.likes;
         console.log(myLikesArray);
         let myLikesArrayStrings = myLikesArray.map((like) => String(like));
@@ -139,7 +140,7 @@ router.get('/users', isLoggedIn, (req, res, next) => {
 
         if (matchLike) {
           // match array of user likes to all users
-
+          // we are returning the users with a property of likedme?
           return { ...user, isLiked: true };
         } else {
           return { ...user, isLiked: false };
@@ -294,26 +295,7 @@ router.post('/logout', isLoggedIn, (req, res, next) => {
   });
 });
 
-// router.get('/motivation', (req, res, next) => {
-//   axios
-//     .get(
-//       'https://bodybuilding-quotes1.p.rapidapi.com/quotes',
-//       { params: { page: 1 } },
-//       {
-//         headers: {
-//           'X-RapidAPI-Host': 'bodybuilding-quotes1.p.rapidapi.com',
-//           'X-RapidAPI-Key':
-//             '4c4811e949msh73a6af0cc320281p105381jsn2d3defd13472',
-//         },
-//       }
-//     )
-//     .then((api) => {
-//       console.log(api);
-//       res.render('motivation', { api });
-//     })
-//     .catch((err) => console.log(err));
-// });
-
+//accessing private API
 // router.get('/motivation', (req, res, next) => {
 //   axios
 //     .get('https://exercisedb.p.rapidapi.com/exercises', {
@@ -329,19 +311,9 @@ router.post('/logout', isLoggedIn, (req, res, next) => {
 //     .catch((err) => console.log(err));
 // });
 
-// router.get('/motivation', (req, res, next) => {
-//   axios
-//     .get('https://wger.de/api/v2/exerciseimage/')
-//     .then((api) => {
-//       // console.log(api.data.results);
-//       res.render('motivation', { api });
-//     })
-//     .catch((err) => console.log(err));
-// });
-
 router.get('/workouts', (req, res, next) => {
   axios
-    .get('http://localhost:8000/exercises?page_1&_limit=500')
+    .get(`${process.env.EXERCISES_API}/exercises?page_1&_limit=500`)
     .then((api) => {
       console.log(api);
 
@@ -352,20 +324,5 @@ router.get('/workouts', (req, res, next) => {
 });
 
 //accessing private API with key
-
-// router.get('/motivation', (req, res, next) => {
-//   axios
-//     .get('https://wger.de/api/v2/mealitem/', {
-//       headers: {
-//         Authorization: `Token ${process.env.SECRET_KEY}`,
-//       },
-//     })
-//     .then((api) => {
-//       console.log(api.data.results);
-//       res.render('motivation', { api });
-//     });
-// });
-
-// only login and signup routs here
 
 module.exports = router;

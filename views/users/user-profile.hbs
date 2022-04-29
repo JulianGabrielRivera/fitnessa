@@ -17,41 +17,26 @@
       />
 
       <img
-        src='/images/unlikeheart.png'
+        src='/images/heart2.png'
         alt=''
         class='{{#unless isLiked}}hidden{{/unless}} heart_img2'
         data-user-id='{{_id}}'
       />
 
       <p class='likes'><span>{{likedMe}}</span> likes </p>
-      {{!-- {{#each userInfoTwo}}
-        <form
-          action='/users/{{userInfo.id}}'
-          method='POST'
-          class='comment_container'
-        > --}}
-      <a href='/users/{{_id}}/comment'>Comment</a>
+    
+      <a href='/users/{{_id}}/comment'>Add a Comment</a>
 
-      {{!-- 
-      <form action='/users/{{_id}}/comment' method='POST'>
-        <button>Comment</button>
-      </form> --}}
-
-      {{! <label>Username:</label>
-  <input type='text' name='name' /> }}
-      {{!-- 
-          <input type='text' name='postName' value='{{name.name}}' hidden />
-          <textarea name='content' cols='30' rows='2'></textarea>
-
-          <button type='submit'>Comment</button>
-
-        </form> --}}
+    
 
     </div>
 
   {{/each}}
+  
 
 </div>
+<script src='/js/lib/script.js'></script>
+
 
 <script src='/js/views/users/user-profile.js'></script>
 

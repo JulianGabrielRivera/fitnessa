@@ -16,35 +16,14 @@
 
     {{/each}}
 
-    <form action='/users/{{_id}}/comment' method='POST'>
+    <form action='/users/{{_id}}/comment' method='POST' class='comment_form'>
 
       <textarea name='content' cols='30' rows='2'></textarea>
 
-      <button type='submit'>Comment</button>
+      <button type='submit' class='comment_button'>Comment</button>
     </form>
-
-    {{!-- {{#each userInfoTwo}}
-        <form
-          action='/users/{{userInfo.id}}'
-          method='POST'
-          class='comment_container'
-        > --}}
-
-    {{!-- 
-      <form action='/users/{{_id}}/comment' method='POST'>
-        <button>Comment</button>
-      </form> --}}
-
-    {{! <label>Username:</label>
-  <input type='text' name='name' /> }}
-    {{!-- 
-          <input type='text' name='postName' value='{{name.name}}' hidden />
-          <textarea name='content' cols='30' rows='2'></textarea>
-
-          <button type='submit'>Comment</button>
-
-        </form> --}}
 
   </div>
 
 </div>
+<script src='/js/lib/script.js'></script>
