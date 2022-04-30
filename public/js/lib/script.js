@@ -22,9 +22,9 @@ switchButton.addEventListener('click', () => {
   loggedOutNav.forEach((a) => {
     a.classList.toggle('lightmode');
   });
-  nav.forEach((tag) => {
-    tag.classList.toggle('lightmode');
-  });
+  // nav.forEach((tag) => {
+  //   tag.classList.toggle('lightmode');
+  // });
 
   blogText.forEach((blog) => {
     blog.classList.toggle('lightmode');
