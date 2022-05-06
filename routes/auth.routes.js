@@ -235,18 +235,18 @@ router.post('/users/:id/comment', (req, res, next) => {
     });
 });
 
-router.post('/like/:id', (req, res, next) => {
+router.post('/unlike/:id', (req, res, next) => {
   const { id } = req.params;
   User.findByIdAndUpdate(
     req.session.currentUser._id,
     {
-      $push: { likes: id },
+      $pull: { likes: id },
     },
     { new: true }
   )
     .then((updatedUser) => {
       req.session.currentUser = updatedUser;
-      User.findByIdAndUpdate(id, { $inc: { likedMe: 1 } }, { new: true })
+      User.findByIdAndUpdate(id, { $inc: { likedMe: -1 } }, { new: true })
         .then((likedUser) => {
           res.json({ success: true, likedUser });
         })
@@ -260,22 +260,22 @@ router.post('/like/:id', (req, res, next) => {
       res.json({ success: false });
     });
 });
-router.post('/unlike/:id', (req, res, next) => {
+router.post('/like/:id', (req, res, next) => {
   const { id } = req.params;
 
   User.findByIdAndUpdate(
     req.session.currentUser._id,
     {
       // instead of pushing find by id and remove it find what index its at and remove.
-      $pull: { likes: id },
+      $push: { likes: id },
     },
     { new: true }
   )
     .then((updatedUser) => {
       req.session.currentUser = updatedUser;
-      User.findByIdAndUpdate(id, { $inc: { likedMe: -1 } }, { new: true })
-        .then((unlikedUser) => {
-          res.json({ success: true, unlikedUser });
+      User.findByIdAndUpdate(id, { $inc: { likedMe: 1 } }, { new: true })
+        .then((likedUser) => {
+          res.json({ success: true, likedUser });
         })
         .catch((err) => {
           console.log(err);

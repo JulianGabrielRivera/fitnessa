@@ -8,21 +8,23 @@ console.log(profileImg);
 console.log(heartImg2);
 
 let isSending = false;
-for (let i = 0; i < heartImg.length; i++) {
-  heartImg[i].addEventListener('click', () => {
+for (let i = 0; i < heartImg2.length; i++) {
+  heartImg2[i].addEventListener('click', () => {
     if (!isSending) {
       isSending = true;
       axios
         .post(`/like/${heartImg[i].dataset.userId}`)
         .then((response) => {
           if (response.data.success) {
+            console.log(response.data);
             likes[i].textContent = response.data.likedUser.likedMe;
           }
 
           // console.log(response);
+
+          heartImg2[i].classList.add('hidden');
+          heartImg[i].classList.remove('hidden');
           isSending = false;
-          heartImg[i].classList.add('hidden');
-          heartImg2[i].classList.remove('hidden');
         })
         .catch((err) => {
           isSending = false;
@@ -33,10 +35,11 @@ for (let i = 0; i < heartImg.length; i++) {
     console.log(heartImg[i].dataset.userId);
   });
 }
+
 //  page loads set to false by default then if you click it looks for if statement, if true it runs code inside if statement
 
-for (let i = 0; i < heartImg2.length; i++) {
-  heartImg2[i].addEventListener('click', () => {
+for (let i = 0; i < heartImg.length; i++) {
+  heartImg[i].addEventListener('click', () => {
     // first time it sends its true cause we negative it with ! and second time it wont work until first reponse gets back
     if (!isSending) {
       isSending = true;
@@ -50,12 +53,13 @@ for (let i = 0; i < heartImg2.length; i++) {
         .then((response) => {
           if (response.data.success) {
             // total number of people that like dthem
-            likes[i].textContent = response.data.unlikedUser.likedMe;
+            console.log(response.data);
+            likes[i].textContent = response.data.likedUser.likedMe;
           }
-          isSending = false;
-          heartImg[i].classList.remove('hidden');
-          heartImg2[i].classList.add('hidden');
 
+          heartImg2[i].classList.remove('hidden');
+          heartImg[i].classList.add('hidden');
+          isSending = false;
           console.log(response);
         })
         .catch((err) => {
