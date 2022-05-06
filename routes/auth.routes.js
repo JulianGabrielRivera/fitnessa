@@ -50,7 +50,10 @@ router.post(
         password: hashedPassword,
         name,
         time,
-        image: req.file.path,
+        image:
+          req.file === undefined
+            ? 'https://icon-library.com/images/default-profile-icon/default-profile-icon-24.jpg'
+            : req.file.path,
       })
         .then((userInfo) => {
           // console.log('new user', userInfo);
