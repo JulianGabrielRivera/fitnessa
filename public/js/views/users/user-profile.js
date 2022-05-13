@@ -13,6 +13,7 @@ for (let i = 0; i < heartImg2.length; i++) {
     if (!isSending) {
       isSending = true;
       axios
+        // post request to the back end
         .post(`/like/${heartImg[i].dataset.userId}`)
         .then((response) => {
           if (response.data.success) {

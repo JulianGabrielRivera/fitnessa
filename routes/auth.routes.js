@@ -90,26 +90,27 @@ router.get('/login', isLoggedOut, (req, res, next) => {
 });
 
 router.post('/login', isLoggedOut, (req, res, next) => {
-  const { email, password } = req.body;
+  const { userEmail, password } = req.body;
   // console.log(req.session);
   // console.log(req.session.currentUser);
-  if (email === '' || password === '') {
+  if (userEmail === '' || password === '') {
     res.render('auth/login', {
       errorMessage: 'Please enter both, email and password to login',
     });
     return;
   }
-  User.findOne({ email })
-    .then((emailFound) => {
-      if (!emailFound) {
+  User.findOne({ userEmail })
+    .then((userFound) => {
+      if (!userFound) {
         res.render('auth/login', {
           errorMessage: 'Email is not registered. Try with other email.',
         });
         return;
-      } else if (bcryptjs.compareSync(password, emailFound.password)) {
+      } else if (bcryptjs.compareSync(password, userFound.password)) {
         // whhere is currentuser coming from?
 
-        req.session['currentUser'] = emailFound;
+        // we make a key called currentuser and store all of the users data and this makes it possible to use it later.
+        req.session['currentUser'] = userFound;
         res.redirect('/myprofile');
         // res.render('users/my-profile', { emailFound });
       } else {
@@ -180,6 +181,7 @@ router.post('/users/:id/edit', isLoggedIn, (req, res) => {
   User.findByIdAndUpdate(id, { name, time }, { new: true })
     .then((updatedUserInfo) => {
       // console.log(name);
+      //  overwrites current user data, the user who is logged in
       req.session.currentUser = updatedUserInfo;
       res.redirect('/myprofile');
     })
@@ -263,21 +265,29 @@ router.post('/unlike/:id', (req, res, next) => {
       res.json({ success: false });
     });
 });
-router.post('/like/:id', (req, res, next) => {
-  const { id } = req.params;
+router.post('/like/:otherPersonsId', (req, res, next) => {
+  const { otherPersonsId } = req.params;
 
   User.findByIdAndUpdate(
     req.session.currentUser._id,
     {
       // instead of pushing find by id and remove it find what index its at and remove.
-      $push: { likes: id },
+      $push: { likes: otherPersonsId },
     },
     { new: true }
   )
     .then((updatedUser) => {
+      // overrides old session data/ resolves gives u data, rejects something went wrong
       req.session.currentUser = updatedUser;
-      User.findByIdAndUpdate(id, { $inc: { likedMe: 1 } }, { new: true })
+
+      User.findByIdAndUpdate(
+        otherPersonsId,
+        { $inc: { likedMe: 1 } },
+        { new: true }
+      )
         .then((likedUser) => {
+          console.log(likedUser);
+          // object 2 keys, with value of true, key of likeduser matches user model which has all those keys/values
           res.json({ success: true, likedUser });
         })
         .catch((err) => {
