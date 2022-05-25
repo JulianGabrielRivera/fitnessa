@@ -133,7 +133,7 @@ router.get('/users', isLoggedIn, (req, res, next) => {
       // console.log(userInfo);
       let userInfo = userInfoArray.map((user) => {
         //  our personal likes array
-        // everything happening in if statement
+        // everything happening in if statementcd ..
 
         let myLikesArray = req.session.currentUser.likes;
         console.log(myLikesArray);
@@ -240,8 +240,8 @@ router.post('/users/:id/comment', (req, res, next) => {
     });
 });
 
-router.post('/unlike/:id', (req, res, next) => {
-  const { id } = req.params;
+router.post('/unlike/:otherPersonsId', (req, res, next) => {
+  const { otherPersonsId } = req.params;
   User.findByIdAndUpdate(
     req.session.currentUser._id,
     {
