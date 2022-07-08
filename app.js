@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 });
 
 const index = require('./routes/index');
-app.use('/Home', index);
+app.use('/', index);
 
 const authRouter = require('./routes/auth.routes');
 app.use('/', authRouter);
