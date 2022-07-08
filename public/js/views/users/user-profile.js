@@ -70,7 +70,6 @@ for (let i = 0; i < heartImg.length; i++) {
     }
   });
 }
-
 profileImg.forEach((img) => {
   img.addEventListener('click', () => {
     axios.get(`/users/${img.dataset.userId}/comment`).then((response) => {

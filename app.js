@@ -31,9 +31,12 @@ app.use('/Home', index);
 const authRouter = require('./routes/auth.routes');
 app.use('/', authRouter);
 
-const publicRouter = express.Router();
-publicRouter.get('/my-public-route'), (req, res) => res.send('public');
-app.use('/', publicRouter);
+const contactRouter = require('./routes/contact.routes');
+app.use('/', contactRouter);
+
+// const publicRouter = express.Router();
+// publicRouter.get('/my-public-route'), (req, res) => res.send('public');
+// app.use('/', publicRouter);
 
 const isLoggedIn = require('./middleware/route-guard').isLoggedIn;
 app.use(isLoggedIn);

@@ -6,6 +6,7 @@ const fileUploader = require('../config/cloudinary.config');
 const { isLoggedIn, isLoggedOut } = require('../middleware/route-guard.js');
 const Comment = require('../models/Comment.model');
 const axios = require('axios');
+
 router.get('/signup', isLoggedOut, (req, res, next) => {
   axios
     .get('https://wger.de/api/v2/exerciseimage/?limit=19')
@@ -22,6 +23,7 @@ router.post(
   fileUploader.single('profile-image'),
   (req, res, next) => {
     const { email, password, name, time } = req.body;
+    console.log(req.body);
 
     if (!email || !password) {
       const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
@@ -91,6 +93,7 @@ router.get('/login', isLoggedOut, (req, res, next) => {
 
 router.post('/login', isLoggedOut, (req, res, next) => {
   const { userEmail, password } = req.body;
+  console.log(req.body);
   // console.log(req.session);
   // console.log(req.session.currentUser);
   if (userEmail === '' || password === '') {
@@ -111,6 +114,7 @@ router.post('/login', isLoggedOut, (req, res, next) => {
 
         // we make a key called currentuser and store all of the users data and this makes it possible to use it later.
         req.session['currentUser'] = userFound;
+        console.log(req.session.currentUser);
         res.redirect('/myprofile');
         // res.render('users/my-profile', { emailFound });
       } else {
@@ -121,7 +125,7 @@ router.post('/login', isLoggedOut, (req, res, next) => {
 });
 
 router.get('/myprofile', isLoggedIn, (req, res, next) => {
-  // console.log(req.session);
+  console.log(req.session);
   res.render('users/my-profile', { userInSession: req.session.currentUser });
   // console.log(req.session.currentUser.name);
 });
@@ -133,7 +137,7 @@ router.get('/users', isLoggedIn, (req, res, next) => {
       // console.log(userInfo);
       let userInfo = userInfoArray.map((user) => {
         //  our personal likes array
-        // everything happening in if statementcd ..
+        // everything happening in if statement
 
         let myLikesArray = req.session.currentUser.likes;
         console.log(myLikesArray);
@@ -240,18 +244,20 @@ router.post('/users/:id/comment', (req, res, next) => {
     });
 });
 
-router.post('/unlike/:otherPersonsId', (req, res, next) => {
-  const { otherPersonsId } = req.params;
+router.post('/like/:id', (req, res, next) => {
+  const { id } = req.params;
+
   User.findByIdAndUpdate(
     req.session.currentUser._id,
     {
-      $pull: { likes: id },
+      // instead of pushing find by id and remove it find what index its at and remove.
+      $push: { likes: id },
     },
     { new: true }
   )
     .then((updatedUser) => {
       req.session.currentUser = updatedUser;
-      User.findByIdAndUpdate(id, { $inc: { likedMe: -1 } }, { new: true })
+      User.findByIdAndUpdate(id, { $inc: { likedMe: 1 } }, { new: true })
         .then((likedUser) => {
           res.json({ success: true, likedUser });
         })
@@ -265,29 +271,21 @@ router.post('/unlike/:otherPersonsId', (req, res, next) => {
       res.json({ success: false });
     });
 });
-router.post('/like/:otherPersonsId', (req, res, next) => {
-  const { otherPersonsId } = req.params;
-
+router.post('/unlike/:id', (req, res, next) => {
+  const { id } = req.params;
+  console.log(id);
   User.findByIdAndUpdate(
     req.session.currentUser._id,
+
     {
-      // instead of pushing find by id and remove it find what index its at and remove.
-      $push: { likes: otherPersonsId },
+      $pull: { likes: id },
     },
     { new: true }
   )
     .then((updatedUser) => {
-      // overrides old session data/ resolves gives u data, rejects something went wrong
       req.session.currentUser = updatedUser;
-
-      User.findByIdAndUpdate(
-        otherPersonsId,
-        { $inc: { likedMe: 1 } },
-        { new: true }
-      )
+      User.findByIdAndUpdate(id, { $inc: { likedMe: -1 } }, { new: true })
         .then((likedUser) => {
-          console.log(likedUser);
-          // object 2 keys, with value of true, key of likeduser matches user model which has all those keys/values
           res.json({ success: true, likedUser });
         })
         .catch((err) => {
