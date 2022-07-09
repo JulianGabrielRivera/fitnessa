@@ -12,14 +12,14 @@
       <img
         src='/images/heart1.png'
         alt=''
-        class='{{#if isLiked}}hidden{{/if}} heart_img'
+        class='{{#unless isLiked}}hidden{{/unless}} heart_img'
         data-user-id='{{_id}}'
       />
 
       <img
         src='/images/heart2.png'
         alt=''
-        class='{{#unless isLiked}}hidden{{/unless}} heart_img2'
+        class='{{#if isLiked}}hidden{{/if}} heart_img2'
         data-user-id='{{_id}}'
       />
 

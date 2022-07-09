@@ -1,0 +1,142 @@
+{{!-- <div class='main_container'>
+  <form action='/contact' method='POST' class='form_container'>
+    <h2>Send Email!</h2>
+    <div class='email_and_password'>
+
+      <div>
+        <label for='myEmail'></label>
+        Email:
+        {{! whhatever i put in the name attribute becomes the key in the body of the request because form method is set to post }}
+        <input id='myEmail' type='email' name='userEmail' placeholder='Enter your email' />
+      </div>
+      <div>
+        <label for='mySubject'></label>
+        Subject:
+        <input
+          id='mySubject'
+          type='text'
+          name='userSubject'
+          placeholder="Enter your subject"
+          
+        />
+      </div>
+      <div>
+          <label for="myMessage"></label>
+          Message:
+            </div>
+  <textarea type="text" name="message" id="myMessage" rows="4" cols="45" placeholder="Type your message here"></textarea>
+    
+
+      {{#if errorMessage}}
+        <p class='error'>{{errorMessage}}</p>
+      {{/if}}
+    </div>
+
+    <button type='submit'>Submit</button>
+
+  </form> --}}
+<div class='calculators_container'>
+
+  <div class='calculator_container'>
+    <div class='inside_calculator_container'>
+      <h2>BMI</h2>
+      <div style='text-align:center'>
+        <label for='yourBMI'>Your Current BMI:</label>
+        <input id='yourBMI' type='text' name='bmi' style='width:100px ' />
+      </div>
+      <div class='calculator_inputs'>
+
+        <div>
+          <label for='myEmail'> Your Height:</label>
+
+          {{! whhatever i put in the name attribute becomes the key in the body of the request because form method is set to post }}
+
+          <input id='myFeet' type='number' name='userFeet' placeholder='feet' />
+          <label for='myFeet'> (feet)</label>
+
+        </div>
+
+        <div class='myInches'>
+          <input
+            id='myInches'
+            type='number'
+            name='userInches'
+            placeholder='inches'
+          />
+          <label for='myFeet'> (inches)</label>
+        </div>
+
+        <div class='yourWeight'>
+          <label for='yourWeight'>Your Weight</label>
+
+          <input
+            id='yourWeight'
+            type='text'
+            name='weight'
+            placeholder='Enter your weight'
+          />
+          (weight)
+        </div>
+
+        {{#if errorMessage}}
+          <p class='error'>{{errorMessage}}</p>
+        {{/if}}
+      </div>
+
+      <button type='button' id='bmiButton'>Calculate BMI</button>
+    </div>
+  </div>
+
+  <div class='calculator_container'>
+    <div class='inside_calculator_container'>
+      <h2>Total Calories Needed</h2>
+      <div style='text-align:center'>
+        <label for='yourBMI'>Your Current BMI:</label>
+        <input id='yourBMI' type='text' name='bmi' style='width:100px ' />
+      </div>
+      <div class='calculator_inputs'>
+
+        <div>
+          <label for='myEmail'> Your Height:</label>
+
+          {{! whhatever i put in the name attribute becomes the key in the body of the request because form method is set to post }}
+
+          <input id='myFeet' type='number' name='userFeet' placeholder='feet' />
+          <label for='myFeet'> (feet)</label>
+
+        </div>
+
+        <div class='myInches'>
+          <input
+            id='myInches'
+            type='number'
+            name='userInches'
+            placeholder='inches'
+          />
+          <label for='myFeet'> (inches)</label>
+        </div>
+
+        <div class='yourWeight'>
+          <label for='yourWeight'>Your Weight</label>
+
+          <input
+            id='yourWeight'
+            type='text'
+            name='weight'
+            placeholder='Enter your weight'
+          />
+          (weight)
+        </div>
+
+        {{#if errorMessage}}
+          <p class='error'>{{errorMessage}}</p>
+        {{/if}}
+      </div>
+
+      <button type='button' id='bmiButton'>Calculate BMI</button>
+    </div>
+  </div>
+
+</div>
+
+<script src='/js/views/users/bmi.js'></script>

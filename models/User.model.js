@@ -24,7 +24,14 @@ const userSchema = new Schema(
     myComments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
     //  comments that people have said about my profile
     userComments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+    status: {
+      type: String,
+      enum: ['Pending Confirmation', 'Active'],
+      default: 'Pending Confirmation',
+    },
+    confirmationCode: String,
   },
+
   {
     timestamps: true,
   }

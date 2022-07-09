@@ -31,8 +31,8 @@ app.use('/', index);
 const authRouter = require('./routes/auth.routes');
 app.use('/', authRouter);
 
-const contactRouter = require('./routes/contact.routes');
-app.use('/', contactRouter);
+const calculatorRouter = require('./routes/calculators.routes');
+app.use('/', calculatorRouter);
 
 // const publicRouter = express.Router();
 // publicRouter.get('/my-public-route'), (req, res) => res.send('public');

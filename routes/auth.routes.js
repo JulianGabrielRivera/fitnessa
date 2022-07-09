@@ -6,12 +6,13 @@ const fileUploader = require('../config/cloudinary.config');
 const { isLoggedIn, isLoggedOut } = require('../middleware/route-guard.js');
 const Comment = require('../models/Comment.model');
 const axios = require('axios');
+const nodemailer = require('nodemailer');
 
 router.get('/signup', isLoggedOut, (req, res, next) => {
   axios
     .get('https://wger.de/api/v2/exerciseimage/?limit=19')
     .then((api) => {
-      console.log(api.data.results);
+      // console.log(api.data.results);
       res.render('auth/signup', { api });
     })
     .catch((err) => console.log(err));
@@ -22,7 +23,7 @@ router.post(
   isLoggedOut,
   fileUploader.single('profile-image'),
   (req, res, next) => {
-    const { email, password, name, time } = req.body;
+    const { email, password, name, time, confirmationCode } = req.body;
     console.log(req.body);
 
     if (!email || !password) {
@@ -42,6 +43,13 @@ router.post(
       });
       return;
     }
+    const characters =
+      '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let token = '';
+    for (let i = 0; i < 25; i++) {
+      token += characters[Math.floor(Math.random() * characters.length)];
+    }
+    console.log(token, 'hey');
 
     // hash the pw
 
@@ -56,8 +64,24 @@ router.post(
           req.file === undefined
             ? 'https://icon-library.com/images/default-profile-icon/default-profile-icon-24.jpg'
             : req.file.path,
+        confirmationCode: token,
       })
         .then((userInfo) => {
+          console.log(userInfo);
+          let transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+              user: 'juliangabrielriveradev@gmail.com',
+              pass: 'fjemoeeqcxhcanjq',
+            },
+          });
+
+          transporter.sendMail({
+            from: `"fitnessa " <myawesome@project.com>`,
+            to: email,
+            subject: 'Please verify your Email',
+            text: `http://localhost:3000/confirm/${userInfo.confirmationCode}`,
+          });
           // console.log('new user', userInfo);
           res.redirect('signup');
         })
@@ -81,30 +105,68 @@ router.post(
   }
 );
 
+router.get('/confirm/:confirmationCode', (req, res, next) => {
+  const { confirmationCode } = req.params;
+  console.log(confirmationCode);
+  User.findOne({ confirmationCode }).then((userInfo) => {
+    console.log(userInfo);
+    if (confirmationCode === userInfo.confirmationCode) {
+      User.findOneAndUpdate(
+        { confirmationCode },
+        { status: 'Active' },
+        { new: true }
+      ).then((response) => {
+        console.log(response);
+        res.redirect('/');
+      });
+    } else {
+      res.send('no');
+    }
+  });
+
+  // User.find({ confirmationCode }).then((user) => {
+  //   if (confirmationCode === user[0].confirmationCode) {
+  //     console.log(user);
+
+  //     res.redirect('/');
+  // } else {
+  //   res.send('no');
+  // }
+});
+// User.findById(confirmationCode).then((userInfo) => {
+//   console.log(userInfo);
+// });
+//   if (userFound.confirmCode === confirmationCode) {
+
+// }
+
 router.get('/login', isLoggedOut, (req, res, next) => {
   axios
     .get('https://wger.de/api/v2/exerciseimage/?limit=19')
     .then((api) => {
-      console.log(api.data.results);
+      // console.log(api.data.results);
       res.render('auth/login', { api });
     })
     .catch((err) => console.log(err));
 });
 
 router.post('/login', isLoggedOut, (req, res, next) => {
-  const { userEmail, password } = req.body;
+  const { email, password } = req.body;
   console.log(req.body);
   // console.log(req.session);
   // console.log(req.session.currentUser);
-  if (userEmail === '' || password === '') {
+  if (email === '' || password === '') {
     res.render('auth/login', {
       errorMessage: 'Please enter both, email and password to login',
     });
     return;
   }
-  User.findOne({ userEmail })
+  User.findOne({ email })
     .then((userFound) => {
-      if (!userFound) {
+      console.log(userFound, 'hey');
+      if (userFound.status === 'Pending Confirmation') {
+        res.send('Please verify your Email first');
+      } else if (!userFound) {
         res.render('auth/login', {
           errorMessage: 'Email is not registered. Try with other email.',
         });
@@ -115,6 +177,7 @@ router.post('/login', isLoggedOut, (req, res, next) => {
         // we make a key called currentuser and store all of the users data and this makes it possible to use it later.
         req.session['currentUser'] = userFound;
         console.log(req.session.currentUser);
+
         res.redirect('/myprofile');
         // res.render('users/my-profile', { emailFound });
       } else {
@@ -286,6 +349,7 @@ router.post('/unlike/:id', (req, res, next) => {
       req.session.currentUser = updatedUser;
       User.findByIdAndUpdate(id, { $inc: { likedMe: -1 } }, { new: true })
         .then((likedUser) => {
+          console.log(likedUser);
           res.json({ success: true, likedUser });
         })
         .catch((err) => {
@@ -326,7 +390,7 @@ router.get('/workouts', (req, res, next) => {
   axios
     .get(`${process.env.EXERCISES_API}/exercises?page_1&_limit=500`)
     .then((api) => {
-      console.log(api);
+      // console.log(api);
 
       // console.log(api.data.results);
       res.render('workouts.hbs', { api });
