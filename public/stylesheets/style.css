@@ -104,8 +104,8 @@ nav a:hover {
   display: flex;
   flex-direction: column;
   margin-right: 20px;
-  height: 400px;
-  width: 400px;
+  height: 500px;
+  width: 500px;
   border-radius: 10px;
   background-color: #201c2b;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);

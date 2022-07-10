@@ -90,37 +90,13 @@
   <div class='calculator_container'>
     <div class='inside_calculator_container'>
       <h2>Total Calories Needed</h2>
-      <div style='text-align:center'>
-        <label for='yourBMI'>Your Current BMI:</label>
-        <input id='yourBMI' type='text' name='bmi' style='width:100px ' />
-      </div>
+
       <div class='calculator_inputs'>
-
-        <div>
-          <label for='myEmail'> Your Height:</label>
-
-          {{! whhatever i put in the name attribute becomes the key in the body of the request because form method is set to post }}
-
-          <input id='myFeet' type='number' name='userFeet' placeholder='feet' />
-          <label for='myFeet'> (feet)</label>
-
-        </div>
-
-        <div class='myInches'>
-          <input
-            id='myInches'
-            type='number'
-            name='userInches'
-            placeholder='inches'
-          />
-          <label for='myFeet'> (inches)</label>
-        </div>
-
-        <div class='yourWeight'>
-          <label for='yourWeight'>Your Weight</label>
+        <div class='calorieWeight'>
+          <label for='calorieWeight'>Your Weight</label>
 
           <input
-            id='yourWeight'
+            id='calorieWeight'
             type='text'
             name='weight'
             placeholder='Enter your weight'
@@ -128,12 +104,76 @@
           (weight)
         </div>
 
+        <div>
+          <label for='myEmail'> Your Height:</label>
+
+          {{! whhatever i put in the name attribute becomes the key in the body of the request because form method is set to post }}
+
+          <input
+            id='calorieFeet'
+            type='number'
+            name='userFeet'
+            placeholder='feet'
+          />
+          <label for='calorieFeet'> (feet)</label>
+
+        </div>
+
+        <div class='calorieInches'>
+          <input
+            id='calorieInches'
+            type='number'
+            name='userInches'
+            placeholder='inches'
+          />
+          <label for='calorieInches'> (inches)</label>
+        </div>
+
+        <div class='myAge'>
+          <label for='myAge'> Age:</label>
+          <input id='myAge' type='number' name='userAge' placeholder='age' />
+          (years)
+        </div>
+
+        <div class='myGender'>
+          <label for='myGender'>Sex:</label>
+          <select id='myGender'>
+            <option>Male </option>
+            <option> Female</option>
+
+          </select>
+          (sex)
+        </div>
+
+        <div style='text-align:center'>
+          <label for='yourBMR'>BMR:</label>
+          <input id='yourBMR' type='text' name='bmr' style='width:100px ' />
+          (cal/day)
+        </div>
+
+        <div style='text-align:center'>
+          <label for='yourPAL'>PAL:</label>
+          <select id='yourPAL'>
+            <option>Little/no exercise(sedentary lifestyle)</option>
+            <option> Light exercise 1-2 times/week </option>
+            <option> Moderate exercise 2-3 times/week </option>
+            <option> Hard exercise 4-5 times week </option>
+            <option> Physical job or hard exercise 6-7 times/week</option>
+          </select>
+          (cal/day)
+        </div>
+        <div>
+
+          Target daily caloric intake:
+          <input id='calories' type='text' />calories
+        </div>
+
         {{#if errorMessage}}
           <p class='error'>{{errorMessage}}</p>
         {{/if}}
       </div>
 
-      <button type='button' id='bmiButton'>Calculate BMI</button>
+      <button type='button' id='calorieButton'>Calculate calories</button>
     </div>
   </div>
 

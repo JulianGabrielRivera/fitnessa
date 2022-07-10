@@ -1,27 +1,62 @@
 console.log('hey');
-const yourFeet = document.getElementById('myFeet');
-const yourInches = document.getElementById('myInches');
-const yourWeight = document.getElementById('yourWeight');
+const bmiFeet = document.getElementById('myFeet');
+const bmiInches = document.getElementById('myInches');
+const bmiWeight = document.getElementById('yourWeight');
 
 const bmi = document.getElementById('bmiButton');
 const currBMI = document.getElementById('yourBMI');
+const currBMR = document.getElementById('yourBMR');
+const bmr = document.getElementById('calorieButton');
+const calorieWeight = document.getElementById('calorieWeight');
+const calorieFeet = document.getElementById('calorieFeet');
+const calorieInches = document.getElementById('calorieInches');
+const calorieAge = document.getElementById('myAge');
 
-console.log(yourFeet);
+const gender = document.getElementById('myGender');
 
 bmi.addEventListener('click', () => {
-  let feet = yourFeet.value;
+  let feet = bmiFeet.value;
   console.log(feet);
-  let inches = yourInches.value;
+  let inches = bmiInches.value;
 
   let height = parseInt(inches) + feet * 12;
   console.log(height);
 
-  let weight = yourWeight.value;
+  let weight = bmiWeight.value;
+  console.log(weight);
 
   let bmi = (weight / Math.pow(height, 2)) * 703;
   console.log(bmi.toFixed(1));
 
   currBMI.value = bmi.toFixed(1).toString();
+});
+
+bmr.addEventListener('click', () => {
+  let weight = calorieWeight.value / 2.205;
+  weight = weight.toFixed(2);
+  console.log(weight);
+  let feet = calorieFeet.value * 30.48;
+  console.log(feet);
+
+  let inches = calorieInches.value * 2.54;
+  console.log(inches);
+  // let height = parseInt(inches) + feet * 12;
+  // console.log(height);
+  let height = feet + inches;
+  console.log(height);
+
+  let genderValue = gender.value;
+  console.log(genderValue);
+
+  let age = calorieAge.value;
+  console.log(age);
+  if (genderValue === 'Male') {
+    let bmr = 66.5 + 13.75 * weight + 5.003 * height - 4.676 * age;
+    currBMR.value = bmr.toFixed();
+  } else if (genderValue === 'Female') {
+    let bmr = 655.1 + 9.563 * weight + 1.85 * height - 4.676 * age;
+    currBMR.value = bmr.toFixed();
+  }
 });
 
 // function bmiCalc(feet, inches, weight) {
