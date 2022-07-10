@@ -11,6 +11,8 @@ const calorieWeight = document.getElementById('calorieWeight');
 const calorieFeet = document.getElementById('calorieFeet');
 const calorieInches = document.getElementById('calorieInches');
 const calorieAge = document.getElementById('myAge');
+const totalCal = document.getElementById('totalCalories');
+const pal = document.getElementById('yourPAL');
 
 const gender = document.getElementById('myGender');
 
@@ -56,6 +58,26 @@ bmr.addEventListener('click', () => {
   } else if (genderValue === 'Female') {
     let bmr = 655.1 + 9.563 * weight + 1.85 * height - 4.676 * age;
     currBMR.value = bmr.toFixed();
+  }
+  if (pal.value === 'Little/no exercise(sedentary lifestyle)') {
+    let calories = currBMR.value * 1.2;
+    totalCal.value = calories.toFixed();
+  }
+  if (pal.value === 'Light exercise 1-2 times/week') {
+    let calories = currBMR.value * 1.375;
+    totalCal.value = calories.toFixed();
+  }
+  if (pal.value === 'Moderate exercise 2-3 times/week') {
+    let calories = currBMR.value * 1.55;
+    totalCal.value = calories.toFixed();
+  }
+  if (pal.value === 'Hard exercise 4-5 times/week') {
+    let calories = currBMR.value * 1.725;
+    totalCal.value = calories.toFixed();
+  }
+  if (pal.value === 'Physical job or hard exercise 6-7 times/week') {
+    let calories = currBMR.value * 1.9;
+    totalCal.value = calories.toFixed();
   }
 });
 
