@@ -1,0 +1,16 @@
+<div class="allProducts">
+  {{#each products}}
+    <a href='/products/{{_id}}'>
+      <div style='display:flex, flex-direction:column'>
+        <img src='{{image}}' alt='' style='height:300px' />
+        </a>
+        <h3>{{name}}</h3>
+        <p>{{price}}</p>
+        <p>{{rating}}</p>
+         <form action='/cart/{{_id}}' method='POST'>
+      <button type='submit' style='width:200px'>Add to Cart</button>
+    </form>
+      </div>
+   
+  {{/each}}
+</div>

@@ -23,7 +23,7 @@ router.post(
   isLoggedOut,
   fileUploader.single('profile-image'),
   (req, res, next) => {
-    const { email, password, name, time, confirmationCode } = req.body;
+    const { email, password, name, time, confirmationCode, role } = req.body;
     console.log(req.body);
 
     if (!email || !password) {
@@ -65,6 +65,7 @@ router.post(
             ? 'https://icon-library.com/images/default-profile-icon/default-profile-icon-24.jpg'
             : req.file.path,
         confirmationCode: token,
+        role,
       })
         .then((userInfo) => {
           console.log(userInfo);

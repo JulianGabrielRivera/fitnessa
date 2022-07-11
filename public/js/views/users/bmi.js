@@ -63,7 +63,7 @@ bmr.addEventListener('click', () => {
     let calories = currBMR.value * 1.2;
     totalCal.value = calories.toFixed();
   }
-  if (pal.value === 'Light exercise 1-2 times/week') {
+  if (pal.value === pal.options[1].value) {
     let calories = currBMR.value * 1.375;
     totalCal.value = calories.toFixed();
   }

@@ -1,0 +1,54 @@
+<div class='cartOrder'>
+  <div class='cartItems'>
+
+    {{#each cartItems.cartItems}}
+
+      <div class='eachCartItem'>
+
+        <p>X</p>
+        <div style='display:flex flex-direction:column'>
+          <img src='{{image}}' alt='' style='height:100px' />
+          <p style='text-align:center'>{{name}}</p>
+        </div>
+
+        <select style='height:20px'>
+          <option>quantity:</option>
+          <option>0</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+          <option>7</option>
+          <option>8</option>
+          <option>9</option>
+          <option>10</option>
+
+        </select>
+        <p>{{price}}</p>
+
+        {{!-- <p>{{price}}</p>  --}}
+      </div>
+    {{else}}
+      <p>Add something to cart</p>
+    {{/each}}
+
+  </div>
+
+  <div class='order'>
+    <h4>Order Summary</h4>
+    <p>Shipping</p>
+    <p>Standard Delivery: $3.99</p>
+
+    <h5>Promo Code</h5>
+    <input type='text' placeholder='Enter code here' />
+    <div>
+      <button>Apply</button>
+    </div>
+    <p>Total Price:{{cartItems.totalPrice}}</p>
+    <div>
+      <button>Checkout!</button>
+    </div>
+  </div>
+</div>

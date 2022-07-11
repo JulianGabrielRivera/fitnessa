@@ -34,6 +34,9 @@ app.use('/', authRouter);
 const calculatorRouter = require('./routes/calculators.routes');
 app.use('/', calculatorRouter);
 
+const shopAllRouter = require('./routes/shop.routes');
+app.use('/', shopAllRouter);
+
 // const publicRouter = express.Router();
 // publicRouter.get('/my-public-route'), (req, res) => res.send('public');
 // app.use('/', publicRouter);

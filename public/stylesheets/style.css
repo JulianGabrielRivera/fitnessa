@@ -10,6 +10,30 @@ body {
   justify-content: space-evenly;
   align-items: center;
 }
+.allProducts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.cartItems {
+  display: flex;
+  flex-direction: column;
+
+  flex-grow: 1;
+}
+.eachCartItem {
+  display: flex;
+  width: 1000px;
+
+  justify-content: space-evenly;
+}
+.cartOrder {
+  display: flex;
+  justify-content: space-evenly;
+}
+.order {
+  flex-grow: 1;
+}
 
 .logout_button {
   background-color: #201c2b;

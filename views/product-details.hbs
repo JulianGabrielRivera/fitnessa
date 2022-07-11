@@ -1,0 +1,21 @@
+<div style='display:flex'>
+  <div style='display:flex'>
+    <div style='display:flex flex-direction:column'>
+
+      <img src='{{image}}' alt='' style='height:300px' />
+      <h3>{{name}}</h3>
+      <p>{{price}}</p>
+      <p>{{description}}</p>
+      <div>
+        <a href='/reviews'>Write a review</a>
+      </div>
+    </div>
+
+  </div>
+  <div style='display:flex flex-direction:column'>
+    <p>{{price}}</p>
+    <form action='/cart/{{_id}}' method='POST'>
+      <button type='submit' style='width:200px'>Add to Cart</button>
+    </form>
+  </div>
+</div>

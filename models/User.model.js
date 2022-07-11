@@ -30,6 +30,12 @@ const userSchema = new Schema(
       default: 'Pending Confirmation',
     },
     confirmationCode: String,
+    role: {
+      type: String,
+      enum: ['GUEST', 'ADMIN'],
+      default: 'GUEST',
+    },
+    userCart: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
   },
 
   {
