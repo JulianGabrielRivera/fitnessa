@@ -4,10 +4,7 @@ const productSchema = new Schema({
   image: String,
   name: String,
   price: Number,
-  rating: {
-    type: Number,
-    default: 0,
-  },
+  rating: [],
   description: String,
   reviews: [{ type: Schema.Types.ObjectId, ref: 'Reviews' }],
 });

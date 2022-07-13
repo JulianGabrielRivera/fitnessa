@@ -1,7 +1,7 @@
 <div class='cartOrder'>
   <div class='cartItems'>
 
-    {{#each cartItems.cartItems}}
+    {{#each response}}
 
       <div class='eachCartItem'>
 
@@ -46,7 +46,7 @@
     <div>
       <button>Apply</button>
     </div>
-    <p>Total Price:{{cartItems.totalPrice}}</p>
+    <p>Total Price:{{cartItems.total}}</p>
     <div>
       <button>Checkout!</button>
     </div>

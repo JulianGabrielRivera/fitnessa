@@ -1,16 +1,50 @@
+<div class="mainFilterContainer">
+<div class="filterContainer">
+<button type="button" class="btn btn-dark" id="creatine" >Creatine</button>
+<button type="button" class="btn btn-dark" id="preworkout">Pre-Workout</button>
+<button type="button" class="btn btn-dark" id="protein">Protein</button>
+<button type="button" class="btn btn-dark" id="postworkout">Post-Workout</button>
+<button type="button" class="btn btn-dark" id="vitamins">Vitamins & Health</button>
+<button type="button" class="btn btn-dark" id="fatburners">Fat Burners</button>
+<button type="button" class="btn btn-dark" id="clothing">Clothing & Accessories</button>
+</div>
+<div>
+   
+        <select style='height:40px'>
+          <option>Featured</option>
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
+          <option>Avg. Customer Review</option>
+       
+
+        </select>
+</div>
+</div>
+</div>
+
+
 <div class="allProducts">
   {{#each products}}
     <a href='/products/{{_id}}'>
       <div style='display:flex, flex-direction:column'>
         <img src='{{image}}' alt='' style='height:300px' />
         </a>
-        <h3>{{name}}</h3>
+        <h3 data-id="{{name}}" class="productName" >{{name}}</h3>
         <p>{{price}}</p>
         <p>{{rating}}</p>
          <form action='/cart/{{_id}}' method='POST'>
+<div class="starsContainer">
+         <img src="../images/mariostar.png" alt="" style="height:35px" class="star1" value="1">
+               <img src="../images/mariostar.png" alt="" style="height:35px" class="star">
+                     <img src="../images/mariostar.png" alt="" style="height:35px" class="star">
+                           <img src="../images/mariostar.png" alt="" style="height:35px" class="star">
+                                 <img src="../images/mariostar.png" alt="" style="height:35px" class="star">
+         </div>
       <button type='submit' style='width:200px'>Add to Cart</button>
     </form>
       </div>
    
   {{/each}}
 </div>
+<script src='https://unpkg.com/axios/dist/axios.min.js'></script>
+<script src='/js/views/users/shopAll.js'></script>

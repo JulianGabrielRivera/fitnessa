@@ -22,6 +22,7 @@ module.exports = (app) => {
   // use session
   app.use(
     session({
+      // make a sesh secret so people cant unlock your cookies.
       secret: process.env.SESS_SECRET,
       resave: true,
       saveUninitialized: false,

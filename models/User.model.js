@@ -5,6 +5,7 @@ const userSchema = new Schema(
     name: String,
     time: String,
     image: String,
+    weight: { type: Number, default: 0 },
     //  user can store other user ids
     likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     likedMe: { type: Number, default: 0 },

@@ -1,4 +1,3 @@
-console.log('hey');
 const bmiFeet = document.getElementById('myFeet');
 const bmiInches = document.getElementById('myInches');
 const bmiWeight = document.getElementById('yourWeight');
@@ -80,6 +79,31 @@ bmr.addEventListener('click', () => {
     totalCal.value = calories.toFixed();
   }
 });
+
+// let stars = [];
+// let ratingNumber = Number(data);
+
+// let starNumber = Math.round(ratingNumber);
+
+// const myFilledStarArray = [];
+
+// for (let i = 0; i < starNumber; i++) {
+//   myFilledStarArray.push(<div>★</div>);
+// }
+
+// const myEmptyStarArray = [];
+// for (let i = 0; i < 5 - starNumber; i++) {
+//   myEmptyStarArray.push(<div>☆</div>);
+// }
+
+// return (
+//   <div style={{ display: 'flex', fontSize: '2rem' }}>
+//     {myFilledStarArray} {myEmptyStarArray}
+//   </div>
+);
+// axios.get('/cart').then((response) => {
+//   console.log(response);
+// });
 
 // function bmiCalc(feet, inches, weight) {
 //   yourFeet.addEventListener('input', (e) => {

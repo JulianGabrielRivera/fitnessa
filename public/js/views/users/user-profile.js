@@ -16,6 +16,7 @@ for (let i = 0; i < heartImg2.length; i++) {
         // post request to the back end
         .post(`/like/${heartImg[i].dataset.userId}`)
         .then((response) => {
+          console.log(response.data);
           if (response.data.success) {
             console.log(response.data);
             likes[i].textContent = response.data.likedUser.likedMe;

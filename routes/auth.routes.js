@@ -23,7 +23,8 @@ router.post(
   isLoggedOut,
   fileUploader.single('profile-image'),
   (req, res, next) => {
-    const { email, password, name, time, confirmationCode, role } = req.body;
+    const { email, password, name, time, confirmationCode, role, weight } =
+      req.body;
     console.log(req.body);
 
     if (!email || !password) {
@@ -66,6 +67,7 @@ router.post(
             : req.file.path,
         confirmationCode: token,
         role,
+        weight,
       })
         .then((userInfo) => {
           console.log(userInfo);
@@ -174,7 +176,7 @@ router.post('/login', isLoggedOut, (req, res, next) => {
         return;
       } else if (bcryptjs.compareSync(password, userFound.password)) {
         // whhere is currentuser coming from?
-
+        console.log(req.session, 'yoyoo');
         // we make a key called currentuser and store all of the users data and this makes it possible to use it later.
         req.session['currentUser'] = userFound;
         console.log(req.session.currentUser);
@@ -237,6 +239,8 @@ router.get('/users/:id/edit', (req, res) => {
   User.findById(id)
     .then((userEdit) => {
       console.log(userEdit);
+      console.log(userEdit.time);
+
       res.render('users/edit-profile', userEdit);
     })
     .catch((err) => console.log(err));
@@ -244,13 +248,15 @@ router.get('/users/:id/edit', (req, res) => {
 
 router.post('/users/:id/edit', isLoggedIn, (req, res) => {
   const { id } = req.params;
-  const { name, time } = req.body;
+  const { name, time, weight } = req.body;
+  console.log(req.body, 'yo');
 
-  User.findByIdAndUpdate(id, { name, time }, { new: true })
+  User.findByIdAndUpdate(id, { name, time, weight }, { new: true })
     .then((updatedUserInfo) => {
       // console.log(name);
       //  overwrites current user data, the user who is logged in
       req.session.currentUser = updatedUserInfo;
+      req.session.currentUser.weight = weight;
       res.redirect('/myprofile');
     })
     .catch((err) => {
@@ -258,6 +264,12 @@ router.post('/users/:id/edit', isLoggedIn, (req, res) => {
     });
 });
 
+router.get('/foodList', (req, res, next) => {
+  const myWeight = req.session.currentUser.weight;
+  console.log(myWeight, 'weight');
+  console.log(req.session, 'weight');
+  res.render('food-list');
+});
 //
 
 router.get('/users/:id/comment', (req, res, next) => {
