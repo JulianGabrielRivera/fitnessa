@@ -22,7 +22,6 @@ router.post('/products', checkAdmin, (req, res, next) => {
       res.redirect('/shopAll');
     })
     .catch((err) => console.log(err));
-  a;
 });
 
 router.get('/products/:productId', (req, res, next) => {
