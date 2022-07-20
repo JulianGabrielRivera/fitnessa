@@ -84,7 +84,7 @@ router.post(
             from: `"fitnessa " <myawesome@project.com>`,
             to: email,
             subject: 'Please verify your Email',
-            text: `http://localhost:3000/confirm/${userInfo.confirmationCode}`,
+            text: `https://fitnessaapp.herokuapp.com/confirm/${userInfo.confirmationCode}`,
           });
           // console.log('new user', userInfo);
           res.redirect('signup');
