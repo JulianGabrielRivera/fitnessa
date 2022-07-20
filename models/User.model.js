@@ -8,6 +8,8 @@ const userSchema = new Schema(
     weight: { type: Number, default: 0 },
     //  user can store other user ids
     likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+
+    productLikes: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
     likedMe: { type: Number, default: 0 },
     email: {
       type: String,

@@ -8,12 +8,12 @@ const clothingButton = document.querySelector('#clothing');
 const starOne = document.querySelector('.star1');
 
 const starsContainer = document.querySelector('.starsContainer');
-const stars = document.querySelectorAll('star');
+const stars = document.querySelectorAll('.star');
 
 const productsName = document.querySelectorAll('.productName');
 console.log(productsName);
 console.log(productsName.innerText);
-
+console.log(stars);
 // productsName.forEach((product) => {
 //   console.log(product.innerText);
 // });
@@ -43,10 +43,69 @@ creatineButton.addEventListener('click', () => {
   console.log(buttonText);
 });
 
-for (let i = 0; i < stars.length; i++) {
-  console.log(i);
-  stars.forEach((star) => {
-    star.innerHTML = i + 1;
+stars.forEach((star) => {
+  star.addEventListener('click', () => {
+    console.log('hey');
+    star.src = '../images/mariostar.png';
+  });
+
+  star.addEventListener('mouseover', () => {
+    console.log('hey');
+    star.src = '../images/mariostar.png';
+  });
+});
+
+//
+
+const likedImage = document.querySelectorAll('.like-img');
+console.log(likedImage);
+const unlikedImage = document.querySelectorAll('.unlike-img');
+const likedMe = document.querySelectorAll('.numOfLikes');
+
+let isSending = false;
+for (let i = 0; i < likedImage.length; i++) {
+  likedImage[i].addEventListener('click', () => {
+    if (!isSending) {
+      isSending = true;
+      axios
+        .post(`/likeEmoji/${likedImage[i].dataset.userId}`)
+        .then((response) => {
+          console.log(response);
+          if (response.data.success) {
+            likedMe[i].textContent = response.data.totalLikes.likedMe;
+          }
+          unlikedImage[i].classList.remove('hidden');
+          likedImage[i].classList.add('hidden');
+          isSending = false;
+        })
+        .catch((error) => {
+          isSending = false;
+          console.log(error);
+        });
+    }
+  });
+}
+
+for (let i = 0; i < unlikedImage.length; i++) {
+  unlikedImage[i].addEventListener('click', () => {
+    if (!isSending) {
+      isSending = true;
+      axios
+        .post(`/unlikeEmoji/${unlikedImage[i].dataset.userId}`)
+        .then((response) => {
+          console.log(response);
+          if (response.data.success) {
+            likedMe[i].textContent = response.data.totalLikes.likedMe;
+          }
+          unlikedImage[i].classList.add('hidden');
+          likedImage[i].classList.remove('hidden');
+          isSending = false;
+        })
+        .catch((error) => {
+          isSending = false;
+          console.log(error);
+        });
+    }
   });
 }
 

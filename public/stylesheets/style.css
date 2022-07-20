@@ -49,10 +49,6 @@ body {
   flex-grow: 1;
 }
 
-.logout_button {
-  background-color: #201c2b;
-  border: none;
-}
 .carousel_img {
   height: 700px;
   object-fit: contain;

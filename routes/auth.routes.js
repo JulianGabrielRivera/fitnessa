@@ -7,6 +7,7 @@ const { isLoggedIn, isLoggedOut } = require('../middleware/route-guard.js');
 const Comment = require('../models/Comment.model');
 const axios = require('axios');
 const nodemailer = require('nodemailer');
+const Product = require('../models/Product.model');
 
 router.get('/signup', isLoggedOut, (req, res, next) => {
   axios
@@ -166,10 +167,11 @@ router.post('/login', isLoggedOut, (req, res, next) => {
   }
   User.findOne({ email })
     .then((userFound) => {
-      console.log(userFound, 'hey');
-      if (userFound.status === 'Pending Confirmation') {
-        res.send('Please verify your Email first');
-      } else if (!userFound) {
+      // console.log(userFound, 'hey');
+      // if (userFound.status === 'Pending Confirmation') {
+      //   res.send('Please verify your Email first');
+      // } else
+      if (!userFound) {
         res.render('auth/login', {
           errorMessage: 'Email is not registered. Try with other email.',
         });
@@ -220,11 +222,11 @@ router.get('/users', isLoggedIn, (req, res, next) => {
           return { ...user, isLiked: false };
         }
       });
-      console.log(userInfo);
+
       userInfo = userInfo.filter(
         (user) => String(req.session.currentUser._id) != String(user._id)
       );
-
+      console.log(userInfo);
       res.render('users/user-profile', { userInfo });
     })
     .catch((err) => {
@@ -234,7 +236,7 @@ router.get('/users', isLoggedIn, (req, res, next) => {
 
 router.get('/users/:id/edit', (req, res) => {
   const { id } = req.params;
-  // console.log(id);
+  console.log(id, 'heyyyyyy');
 
   User.findById(id)
     .then((userEdit) => {
@@ -322,7 +324,7 @@ router.post('/users/:id/comment', (req, res, next) => {
 
 router.post('/like/:id', (req, res, next) => {
   const { id } = req.params;
-
+  console.log(id, 'ideeeeeee');
   User.findByIdAndUpdate(
     req.session.currentUser._id,
     {
@@ -376,9 +378,74 @@ router.post('/unlike/:id', (req, res, next) => {
     });
 });
 
-router.post('/logout', isLoggedIn, (req, res, next) => {
+// use req.params to get the id when you see :id
+router.post('/likeEmoji/:id', isLoggedIn, (req, res, next) => {
+  const { id } = req.params;
+  Product.findById(id).then((product) => {
+    console.log(product, 'yoyoyoyo');
+    User.findByIdAndUpdate(
+      req.session.currentUser._id,
+      { $push: { productLikes: product._id } },
+      { new: true }
+    ).then((currentUser) => {
+      Product.findByIdAndUpdate(
+        id,
+        { $push: { likes: currentUser._id } },
+        { new: true }
+      )
+
+        .then((outfitLikes) => {
+          Product.findByIdAndUpdate(id, { $inc: { likedMe: 1 } }, { new: true })
+            .then((totalLikes) => {
+              req.session.currentUser.isLiked = true;
+              console.log(req.session, 'cehckinggg');
+              res.json({ success: true, totalLikes: totalLikes });
+            })
+            .catch((err) => {
+              console.error(err);
+              res.json({ success: false });
+            });
+        })
+        .catch((err) => {
+          console.error(err);
+          res.json({ success: false });
+        });
+    });
+  });
+});
+
+router.post('/unlikeEmoji/:id', isLoggedIn, (req, res, next) => {
+  const { id } = req.params;
+  Product.findByIdAndUpdate(
+    id,
+    { $pull: { likes: req.session.currentUser._id } },
+    { new: true }
+  )
+    .then((outfitLikes) => {
+      Product.findByIdAndUpdate(id, { $inc: { likedMe: -1 } }, { new: true })
+        .then((totalLikes) => {
+          req.session.currentUser.isLiked = false;
+          console.log(req.session, 'cehckinggg');
+
+          console.log(req.session);
+          res.json({ success: true, totalLikes: totalLikes });
+        })
+        .catch((err) => {
+          console.error(err);
+          res.json({ success: false });
+        });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.json({ success: false });
+    });
+});
+
+router.get('/logout', isLoggedIn, (req, res, next) => {
+  console.log(req.session, 'hey1');
   req.session.destroy((err) => {
     if (err) next(err);
+    console.log(req.session, 'hey2');
     res.redirect('/');
   });
 });

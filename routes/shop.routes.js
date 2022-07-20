@@ -22,6 +22,7 @@ router.post('/products', checkAdmin, (req, res, next) => {
       res.redirect('/shopAll');
     })
     .catch((err) => console.log(err));
+  a;
 });
 
 router.get('/products/:productId', (req, res, next) => {
@@ -36,10 +37,101 @@ router.get('/products/:productId', (req, res, next) => {
 });
 // careful naming these, they cant be the same, if you want to use calculators for both you must use .hbs on the render
 router.get('/shopAll', (req, res, next) => {
+  if (req.session.currentUser === undefined) {
+    Product.find()
+      .then((products) => {
+        console.log(products, ' yes');
+
+        res.render('shopAll.hbs', {
+          products: products,
+          userInSesh: req.session.currentUser,
+        });
+      })
+
+      .catch((err) => console.log(err));
+  }
+
   Product.find()
     .then((products) => {
-      console.log(products);
-      res.render('shopAll.hbs', { products: products });
+      console.log(products, ' yooooo');
+
+      // let productInfo = products.map((product) => {
+      //   // product.likes.forEach((like) => {
+      //   //   String(like);
+      //   // });
+      //   return String(product.likes);
+      // });
+      let mainArray = [];
+
+      products.forEach((product) => {
+        mainArray.push(product.likes);
+        // console.log('heyhey', productLikesArray, 'yoyoyo');
+
+        // console.log(
+        //   'yes',
+        //   productLikesArray.includes(String(req.session.currentUser._id)),
+        //   'yes'
+        // );
+      });
+      // console.log(mainArray, 'yo');
+      // console.log(
+      //   mainArray.includes(String(req.session.currentUser._id)),
+      //   'yo2'
+      // );
+      mainArray.forEach((product) => {
+        String(product);
+        if (product.includes(String(req.session.currentUser._id))) {
+          return { ...product, isLiked: true };
+        } else {
+          return { ...product, isLiked: false };
+        }
+      });
+
+      mainArray.filter((eachProduct) => {
+        String(eachProduct._id) != String(req.session.currentUser._id);
+      });
+
+      // let matchLike = productInfo.includes(req.session.currentUser._id);
+      // console.log(matchLike);
+      // let matchLike = productInfo.includes(req.session.currentUser._id);
+      // console.log(matchLike);
+      // console.log(req.session.currentUser._id);
+
+      // console.log(productInfo);
+      // let productsInfo = products.map((product) => {
+      //   // let productArrayIdStrings =
+      // });
+      // let matchLike = productsInfo.includes(String());
+      // console.log(productsInfo, 'yo');
+
+      // let userInfo = userInfoArray.map((user) => {
+      //   //  our personal likes array
+      //   // everything happening in if statement
+
+      //   let myLikesArray = req.session.currentUser.likes;
+      //   console.log(myLikesArray);
+      //   let myLikesArrayStrings = myLikesArray.map((like) => String(like));
+      //   console.log(myLikesArrayStrings, user._id, String(user._id));
+      //   let matchLike = myLikesArrayStrings.includes(String(user._id));
+      //   console.log(matchLike);
+
+      //   if (matchLike) {
+      //     // match array of user likes to all users
+      //     // we are returning the users with a property of likedme?
+      //     return { ...user, isLiked: true };
+      //   } else {
+      //     return { ...user, isLiked: false };
+      //   }
+      // });
+      // console.log(userInfo);
+      // userInfo = userInfo.filter(
+      //   (user) => String(req.session.currentUser._id) != String(user._id)
+      // );
+      let currentUser = req.session.currentUser;
+      res.render('shopAll.hbs', {
+        products: products,
+        userInSesh: currentUser,
+      });
     })
     .catch((err) => console.log(err));
 });

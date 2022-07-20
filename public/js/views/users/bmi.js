@@ -100,7 +100,7 @@ bmr.addEventListener('click', () => {
 //   <div style={{ display: 'flex', fontSize: '2rem' }}>
 //     {myFilledStarArray} {myEmptyStarArray}
 //   </div>
-);
+
 // axios.get('/cart').then((response) => {
 //   console.log(response);
 // });

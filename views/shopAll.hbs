@@ -34,16 +34,20 @@
         <p>{{rating}}</p>
          <form action='/cart/{{_id}}' method='POST'>
 <div class="starsContainer">
-         <img src="../images/mariostar.png" alt="" style="height:35px" class="star1" value="1">
-               <img src="../images/mariostar.png" alt="" style="height:35px" class="star">
-                     <img src="../images/mariostar.png" alt="" style="height:35px" class="star">
-                           <img src="../images/mariostar.png" alt="" style="height:35px" class="star">
-                                 <img src="../images/mariostar.png" alt="" style="height:35px" class="star">
+         <img src="../images/mariostar2.png" alt="" style="height:35px" class="star" value="1">
+               <img src="../images/mariostar2.png" alt="" style="height:35px" class="star">
+                     <img src="../images/mariostar2.png" alt="" style="height:35px" class="star">
+                           <img src="../images/mariostar2.png" alt="" style="height:35px" class="star">
+                                 <img src="../images/mariostar2.png" alt="" style="height:35px" class="star">
          </div>
       <button type='submit' style='width:200px'>Add to Cart</button>
     </form>
+ 
+      <img class="{{#if isLiked}} hidden {{/if}} like-img   " src="../images/like.png" alt="" data-user-id="{{_id}}">
+  <img class=" {{#unless isLiked}} hidden{{/unless}} unlike-img   " src="../images/dislike.png" alt="" data-user-id="{{_id}}">
+
       </div>
-   
+   <p class="numOfLikes">{{this.likedMe}}</p>
   {{/each}}
 </div>
 <script src='https://unpkg.com/axios/dist/axios.min.js'></script>
