@@ -131,6 +131,9 @@ body {
   align-items: center;
   text-align: center;
 }
+.workout_card {
+  margin-right: 15px;
+}
 .allProducts {
   display: flex;
   flex-direction: column;
@@ -264,5 +267,57 @@ footer div {
   }
   .header_container h2 {
     margin-top: 20px;
+  }
+  .calculator_container {
+    width: 900px;
+  }
+  .carousel_img {
+    height: 550px;
+    object-fit: cover;
+  }
+  #app_details {
+    flex-direction: row;
+    align-content: center;
+    text-align: center;
+    margin-top: 30px;
+  }
+  .quote {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    width: 60%;
+  }
+  #app_detailsTwo {
+    flex-direction: row;
+    align-content: center;
+    text-align: center;
+    margin-top: 30px;
+  }
+  .quoteTwo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 60%;
+  }
+  #blogs {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+  }
+  .card {
+    flex-grow: 1;
+  }
+  .card img {
+    height: 350px;
+  }
+
+  footer nav {
+    display: flex;
+  }
+  footer li {
+    margin-right: 15px;
   }
 }
