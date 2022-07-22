@@ -43,15 +43,16 @@
                      <img src="../images/mariostar2.png" alt="" style="height:35px" class="star">
                            <img src="../images/mariostar2.png" alt="" style="height:35px" class="star">
                                  <img src="../images/mariostar2.png" alt="" style="height:35px" class="star">
+                                
          </div>
       <button type='submit' style='width:200px' class="cartButton">Add to Cart</button>
     </form>
  
       <img class="{{#if isLiked}} hidden {{/if}} like-img   " src="../images/like.png" alt="" data-user-id="{{_id}}">
   <img class=" {{#unless isLiked}} hidden{{/unless}} unlike-img   " src="../images/dislike.png" alt="" data-user-id="{{_id}}">
-
+ <p class="numOfLikes">likes:{{this.likedMe}}</p>
       </div>
-   <p class="numOfLikes">likes:{{this.likedMe}}</p>
+   
    
   {{/each}}
 </div>
