@@ -88,6 +88,21 @@ body {
 
   width: 200px;
 }
+#search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.usersContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .api_container {
   display: none;
 }
@@ -103,6 +118,36 @@ body {
   display: flex;
   flex-direction: column;
   width: 200px;
+}
+.gym_workouts_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.allProducts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cartButton {
+  margin-left: 50px;
+}
+.filterContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.filterContainer button {
+  flex-grow: 1;
+  flex-basis: 0;
+  text-align: left;
+  border: 1px dashed black;
+}
+.featured {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 footer {
@@ -136,4 +181,11 @@ footer div {
 .heart_img2 {
   height: 30px;
   width: 30px;
+}
+.hidden {
+  display: none;
+}
+.comment_form {
+  display: flex;
+  flex-direction: column;
 }

@@ -1,3 +1,5 @@
+<hr>
+
 <div class="mainFilterContainer">
 <div class="filterContainer">
 <button type="button" class="btn btn-dark" id="creatine" >Creatine</button>
@@ -8,7 +10,8 @@
 <button type="button" class="btn btn-dark" id="fatburners">Fat Burners</button>
 <button type="button" class="btn btn-dark" id="clothing">Clothing & Accessories</button>
 </div>
-<div>
+<hr>
+<div class="featured">
    
         <select style='height:40px'>
           <option>Featured</option>
@@ -26,12 +29,13 @@
 <div class="allProducts">
   {{#each products}}
     <a href='/products/{{_id}}'>
-      <div style='display:flex, flex-direction:column'>
+      <div>
+        <hr>
         <img src='{{image}}' alt='' style='height:300px' />
         </a>
         <h3 data-id="{{name}}" class="productName" >{{name}}</h3>
         <p>{{price}}</p>
-        <p>{{rating}}</p>
+        
          <form action='/cart/{{_id}}' method='POST'>
 <div class="starsContainer">
          <img src="../images/mariostar2.png" alt="" style="height:35px" class="star" value="1">
@@ -40,14 +44,15 @@
                            <img src="../images/mariostar2.png" alt="" style="height:35px" class="star">
                                  <img src="../images/mariostar2.png" alt="" style="height:35px" class="star">
          </div>
-      <button type='submit' style='width:200px'>Add to Cart</button>
+      <button type='submit' style='width:200px' class="cartButton">Add to Cart</button>
     </form>
  
       <img class="{{#if isLiked}} hidden {{/if}} like-img   " src="../images/like.png" alt="" data-user-id="{{_id}}">
   <img class=" {{#unless isLiked}} hidden{{/unless}} unlike-img   " src="../images/dislike.png" alt="" data-user-id="{{_id}}">
 
       </div>
-   <p class="numOfLikes">{{this.likedMe}}</p>
+   <p class="numOfLikes">likes:{{this.likedMe}}</p>
+   
   {{/each}}
 </div>
 <script src='https://unpkg.com/axios/dist/axios.min.js'></script>
