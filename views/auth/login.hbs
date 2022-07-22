@@ -1,14 +1,15 @@
+
+<hr>
 <div class='main_container'>
   <form action='/login' method='POST' class='form_container'>
     <h2>Login</h2>
-    <div class='email_and_password'>
+    <div class='userInformation'>
 
-      <div>
+    
         <label for='myEmail'>Email:</label>
         {{! whhatever i put in the name attribute becomes the key in the body of the request because form method is set to post }}
         <input id='myEmail' type='email' name='email' placeholder='Email' />
-      </div>
-      <div>
+    
         <label for='myPassword'>Password:</label>
         <input
           id='myPassword'
@@ -16,22 +17,18 @@
           name='password'
           placeholder='Password'
         />
-      </div>
+     
 
       {{#if errorMessage}}
         <p class='error'>{{errorMessage}}</p>
       {{/if}}
-    </div>
+
 
     <button type='submit'>Login</button>
 
   </form>
-  <div>
-    <i class='fa-brands fa-twitter social'></i>
-    <i class='fa-brands fa-facebook social'></i>
-    <i class='fa-brands fa-instagram social'></i>
-
-  </div>
+  <hr>
+ 
 
   <footer>
     <nav>
@@ -44,6 +41,12 @@
     </nav>
 
   </footer>
+   <div class="socials">
+    <i class='fa-brands fa-twitter social'></i>
+    <i class='fa-brands fa-facebook social'></i>
+    <i class='fa-brands fa-instagram social'></i>
+
+  </div>
   <div class='api_container'>
 
     {{#each api.data.results}}

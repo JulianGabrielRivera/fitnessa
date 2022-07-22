@@ -35,77 +35,64 @@
     <button type='submit'>Submit</button>
 
   </form> --}}
+<hr />
 <div class='calculators_container'>
 
   <div class='calculator_container'>
     <div class='inside_calculator_container'>
       <h2>BMI</h2>
-      <div style='text-align:center'>
-        <label for='yourBMI'>Your Current BMI:</label>
-        <input id='yourBMI' type='text' name='bmi' style='width:100px ' />
-      </div>
-      <div class='calculator_inputs'>
 
-        <div>
-          <label for='myEmail'> Your Height:</label>
+      <label for='yourBMI'>Your Current BMI:</label>
+      <input id='yourBMI' type='text' name='bmi' style='width:100px ' />
 
-          {{! whhatever i put in the name attribute becomes the key in the body of the request because form method is set to post }}
+      <label for='myEmail'> height:</label>
 
-          <input id='myFeet' type='number' name='userFeet' placeholder='feet' />
-          <label for='myFeet'> (feet)</label>
+      {{! whhatever i put in the name attribute becomes the key in the body of the request because form method is set to post }}
 
-        </div>
+      <input id='myFeet' type='number' name='userFeet' placeholder='feet' />
 
-        <div class='myInches'>
-          <input
-            id='myInches'
-            type='number'
-            name='userInches'
-            placeholder='inches'
-          />
-          <label for='myFeet'> (inches)</label>
-        </div>
+      <input
+        id='myInches'
+        type='number'
+        name='userInches'
+        placeholder='inches'
+      />
 
-        <div class='yourWeight'>
-          <label for='yourWeight'>Your Weight</label>
+      <label for='yourWeight'>weight</label>
 
-          <input
-            id='yourWeight'
-            type='text'
-            name='weight'
-            placeholder='Enter your weight'
-          />
-          (weight)
-        </div>
+      <input
+        id='yourWeight'
+        type='text'
+        name='weight'
+        placeholder='Enter your weight'
+      />
 
-        {{#if errorMessage}}
-          <p class='error'>{{errorMessage}}</p>
-        {{/if}}
-      </div>
+      {{#if errorMessage}}
+        <p class='error'>{{errorMessage}}</p>
+      {{/if}}
 
       <button type='button' id='bmiButton'>Calculate BMI</button>
     </div>
   </div>
-
+<hr>
   <div class='calculator_container'>
     <div class='inside_calculator_container'>
       <h2>Total Calories Needed</h2>
 
       <div class='calculator_inputs'>
         <div class='calorieWeight'>
-          <label for='calorieWeight'>Your Weight</label>
-
+<label for='calorieWeight'> weight:</label>
           <input
             id='calorieWeight'
             type='text'
             name='weight'
             placeholder='Enter your weight'
           />
-          (weight)
+       
         </div>
 
         <div>
-          <label for='myEmail'> Your Height:</label>
+          <label for='myEmail'> height:</label>
 
           {{! whhatever i put in the name attribute becomes the key in the body of the request because form method is set to post }}
 
@@ -115,7 +102,6 @@
             name='userFeet'
             placeholder='feet'
           />
-          <label for='calorieFeet'> (feet)</label>
 
         </div>
 
@@ -126,13 +112,13 @@
             name='userInches'
             placeholder='inches'
           />
-          <label for='calorieInches'> (inches)</label>
+
         </div>
 
         <div class='myAge'>
-          <label for='myAge'> Age:</label>
+          <label for='myAge'> age:</label>
           <input id='myAge' type='number' name='userAge' placeholder='age' />
-          (years)
+
         </div>
 
         <div class='myGender'>
@@ -142,16 +128,15 @@
             <option> Female</option>
 
           </select>
-          (sex)
+         
         </div>
-
-        <div style='text-align:center'>
+<hr>
+  <div>
           <label for='yourBMR'>BMR:</label>
-          <input id='yourBMR' type='text' name='bmr' style='width:100px ' />
-          (cal/day)
+          <input id='yourBMR' type='text' name='bmr' style='display:flex' />(cal/day)
+          </div>
         </div>
 
-        <div style='text-align:center'>
           <label for='yourPAL'>PAL:</label>
           <select id='yourPAL'>
             <option>Little/no exercise(sedentary lifestyle)</option>
@@ -160,24 +145,25 @@
             <option> Hard exercise 4-5 times/week </option>
             <option> Physical job or hard exercise 6-7 times/week</option>
           </select>
-          (cal/day)
+          
         </div>
-        <div>
+       
 
           Target daily caloric intake:
           <input id='totalCalories' type='text' />calories
-        </div>
+       
 
         {{#if errorMessage}}
           <p class='error'>{{errorMessage}}</p>
         {{/if}}
-      </div>
+      
 
       <button type='button' id='calorieButton'>Calculate calories</button>
     </div>
   </div>
 
 </div>
+<hr />
 
 <script src='https://unpkg.com/axios/dist/axios.min.js'></script>
 <script src='/js/views/users/bmi.js'></script>

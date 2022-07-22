@@ -1,3 +1,5 @@
+<hr />
+
 <div class='main_container'>
 
   <form
@@ -8,42 +10,36 @@
   >
 
     <h2>Sign Up</h2>
-    <div class='email_and_password'>
-      <div>
-        <label for='myEmail'>Email:</label>
-        <input id='myEmail' type='email' name='email' placeholder='Email' />
-      </div>
-      <div>
-        <label for='myPassword'>Password:</label>
-        <input
-          id='myPassword'
-          type='password'
-          name='password'
-          placeholder='Password'
-        />
-        <label for='myName'>Name:</label>
-        <input id='myName' type='text' name='name' placeholder='Name' />
+    <div class='userInformation'>
 
-        <label for='myTime'>Time:</label>
-        <input id='myTime' type='text' name='time' placeholder='Workout Time' />
+      <label for='myEmail'>Email:</label>
+      <input id='myEmail' type='email' name='email' placeholder='Email' />
 
-        <label for='myImage'>Image:</label>
-        <input type='file' name='profile-image' />
-        {{#if errorMessage}}
-          <p class='error'>{{errorMessage}}</p>
-        {{/if}}
-      </div>
+      <label for='myPassword'>Password:</label>
+      <input
+        id='myPassword'
+        type='password'
+        name='password'
+        placeholder='Password'
+      />
+      <label for='myName'>Name:</label>
+      <input id='myName' type='text' name='name' placeholder='Name' />
+
+      <label for='myTime'>Time:</label>
+      <input id='myTime' type='text' name='time' placeholder='Workout Time' />
+
+      <label for='myImage'>Image:</label>
+      <input type='file' name='profile-image' />
+      {{#if errorMessage}}
+        <p class='error'>{{errorMessage}}</p>
+      {{/if}}
+
     </div>
 
-    <button type='submit' class='signup_and_login'>CREATE ACCOUNT</button>
+    <button type='submit' class='signup_and_loginButton'>CREATE ACCOUNT</button>
 
   </form>
-  <div>
-    <i class='fa-brands fa-twitter social'></i>
-    <i class='fa-brands fa-facebook social'></i>
-    <i class='fa-brands fa-instagram social'></i>
-
-  </div>
+  <hr />
 
   <footer>
     <nav>
@@ -56,6 +52,12 @@
     </nav>
 
   </footer>
+  <div class='socials'>
+    <i class='fa-brands fa-twitter social'></i>
+    <i class='fa-brands fa-facebook social'></i>
+    <i class='fa-brands fa-instagram social'></i>
+
+  </div>
   <div class='api_container'>
 
     {{#each api.data.results}}
