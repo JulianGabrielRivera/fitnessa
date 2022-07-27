@@ -60,6 +60,7 @@ router.get('/shopAll', (req, res, next) => {
       //   // });
       //   return String(product.likes);
       // });
+      // yea
       let mainArray = [];
 
       products.forEach((product) => {
