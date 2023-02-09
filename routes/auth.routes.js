@@ -1,28 +1,28 @@
-const router = require('express').Router();
-const User = require('../models/User.model');
-const mongoose = require('mongoose');
-const bcryptjs = require('bcryptjs');
-const fileUploader = require('../config/cloudinary.config');
-const { isLoggedIn, isLoggedOut } = require('../middleware/route-guard.js');
-const Comment = require('../models/Comment.model');
-const axios = require('axios');
-const nodemailer = require('nodemailer');
-const Product = require('../models/Product.model');
+const router = require("express").Router();
+const User = require("../models/User.model");
+const mongoose = require("mongoose");
+const bcryptjs = require("bcryptjs");
+const fileUploader = require("../config/cloudinary.config");
+const { isLoggedIn, isLoggedOut } = require("../middleware/route-guard.js");
+const Comment = require("../models/Comment.model");
+const axios = require("axios");
+const nodemailer = require("nodemailer");
+const Product = require("../models/Product.model");
 
-router.get('/signup', isLoggedOut, (req, res, next) => {
+router.get("/signup", isLoggedOut, (req, res, next) => {
   axios
-    .get('https://wger.de/api/v2/exerciseimage/?limit=19')
+    .get("https://wger.de/api/v2/exerciseimage/?limit=19")
     .then((api) => {
       // console.log(api.data.results);
-      res.render('auth/signup', { api });
+      res.render("auth/signup", { api });
     })
     .catch((err) => console.log(err));
 });
 
 router.post(
-  '/signup',
+  "/signup",
   isLoggedOut,
-  fileUploader.single('profile-image'),
+  fileUploader.single("profile-image"),
   (req, res, next) => {
     const { email, password, name, time, confirmationCode, role, weight } =
       req.body;
@@ -31,27 +31,27 @@ router.post(
     if (!email || !password) {
       const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
       if (!regex.test(password)) {
-        res.status(500).render('auth/signup', {
+        res.status(500).render("auth/signup", {
           errorMessage:
-            'Password needs to have at least 6 chars and must contain at least one number, one lowercase and one uppercase letter.',
+            "Password needs to have at least 6 chars and must contain at least one number, one lowercase and one uppercase letter.",
         });
         return;
       }
 
       // reloads the hbs and passes an object on top of that that will display the error message
-      res.render('auth/signup', {
+      res.render("auth/signup", {
         errorMessage:
-          ' All fields are mandatory. Please provide an email and password',
+          " All fields are mandatory. Please provide an email and password",
       });
       return;
     }
     const characters =
-      '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    let token = '';
+      "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let token = "";
     for (let i = 0; i < 25; i++) {
       token += characters[Math.floor(Math.random() * characters.length)];
     }
-    console.log(token, 'hey');
+    console.log(token, "hey");
 
     // hash the pw
 
@@ -64,7 +64,7 @@ router.post(
         time,
         image:
           req.file === undefined
-            ? 'https://icon-library.com/images/default-profile-icon/default-profile-icon-24.jpg'
+            ? "https://icon-library.com/images/default-profile-icon/default-profile-icon-24.jpg"
             : req.file.path,
         confirmationCode: token,
         role,
@@ -73,21 +73,21 @@ router.post(
         .then((userInfo) => {
           console.log(userInfo);
           let transporter = nodemailer.createTransport({
-            service: 'Gmail',
+            service: "Gmail",
             auth: {
-              user: 'juliangabrielriveradev@gmail.com',
-              pass: 'fjemoeeqcxhcanjq',
+              user: "juliangabrielriveradev@gmail.com",
+              pass: "fjemoeeqcxhcanjq",
             },
           });
 
           transporter.sendMail({
             from: `"fitnessa " <myawesome@project.com>`,
             to: email,
-            subject: 'Please verify your Email',
+            subject: "Please verify your Email",
             text: `https://fitnessaapp.herokuapp.com/confirm/${userInfo.confirmationCode}`,
           });
           // console.log('new user', userInfo);
-          res.redirect('signup');
+          res.redirect("/login");
         })
         .catch((error) => {
           console.log(error);
@@ -95,11 +95,11 @@ router.post(
           if (error instanceof mongoose.Error.ValidationError) {
             res
               .status(500)
-              .render('auth/signup', { errorMessage: error.message });
+              .render("auth/signup", { errorMessage: error.message });
             // mongoose db built in errors
           } else if (error.code === 11000) {
-            res.status(500).render('auth/signup', {
-              errorMessage: 'Email has already been used',
+            res.status(500).render("auth/signup", {
+              errorMessage: "Email has already been used",
             });
           } else {
             next(error);
@@ -109,7 +109,7 @@ router.post(
   }
 );
 
-router.get('/confirm/:confirmationCode', (req, res, next) => {
+router.get("/confirm/:confirmationCode", (req, res, next) => {
   const { confirmationCode } = req.params;
   console.log(confirmationCode);
   User.findOne({ confirmationCode }).then((userInfo) => {
@@ -117,14 +117,14 @@ router.get('/confirm/:confirmationCode', (req, res, next) => {
     if (confirmationCode === userInfo.confirmationCode) {
       User.findOneAndUpdate(
         { confirmationCode },
-        { status: 'Active' },
+        { status: "Active" },
         { new: true }
       ).then((response) => {
         console.log(response);
-        res.redirect('/');
+        res.redirect("/");
       });
     } else {
-      res.send('no');
+      res.send("no");
     }
   });
 
@@ -144,24 +144,24 @@ router.get('/confirm/:confirmationCode', (req, res, next) => {
 
 // }
 
-router.get('/login', isLoggedOut, (req, res, next) => {
+router.get("/login", isLoggedOut, (req, res, next) => {
   axios
-    .get('https://wger.de/api/v2/exerciseimage/?limit=19')
+    .get("https://wger.de/api/v2/exerciseimage/?limit=19")
     .then((api) => {
       // console.log(api.data.results);
-      res.render('auth/login', { api });
+      res.render("auth/login", { api });
     })
     .catch((err) => console.log(err));
 });
 
-router.post('/login', isLoggedOut, (req, res, next) => {
+router.post("/login", isLoggedOut, (req, res, next) => {
   const { email, password } = req.body;
   console.log(req.body);
   // console.log(req.session);
   // console.log(req.session.currentUser);
-  if (email === '' || password === '') {
-    res.render('auth/login', {
-      errorMessage: 'Please enter both, email and password to login',
+  if (email === "" || password === "") {
+    res.render("auth/login", {
+      errorMessage: "Please enter both, email and password to login",
     });
     return;
   }
@@ -172,33 +172,33 @@ router.post('/login', isLoggedOut, (req, res, next) => {
       //   res.send('Please verify your Email first');
       // } else
       if (!userFound) {
-        res.render('auth/login', {
-          errorMessage: 'Email is not registered. Try with other email.',
+        res.render("auth/login", {
+          errorMessage: "Email is not registered. Try with other email.",
         });
         return;
       } else if (bcryptjs.compareSync(password, userFound.password)) {
         // whhere is currentuser coming from?
-        console.log(req.session, 'yoyoo');
+        console.log(req.session, "yoyoo");
         // we make a key called currentuser and store all of the users data and this makes it possible to use it later.
-        req.session['currentUser'] = userFound;
+        req.session["currentUser"] = userFound;
         console.log(req.session.currentUser);
 
-        res.redirect('/myprofile');
+        res.redirect("/myprofile");
         // res.render('users/my-profile', { emailFound });
       } else {
-        res.render('auth/login', { errorMessage: 'Incorrect password.' });
+        res.render("auth/login", { errorMessage: "Incorrect password." });
       }
     })
     .catch((error) => next(error));
 });
 
-router.get('/myprofile', isLoggedIn, (req, res, next) => {
+router.get("/myprofile", isLoggedIn, (req, res, next) => {
   console.log(req.session);
-  res.render('users/my-profile', { userInSession: req.session.currentUser });
+  res.render("users/my-profile", { userInSession: req.session.currentUser });
   // console.log(req.session.currentUser.name);
 });
 
-router.get('/users', isLoggedIn, (req, res, next) => {
+router.get("/users", isLoggedIn, (req, res, next) => {
   User.find()
     .lean()
     .then((userInfoArray) => {
@@ -227,31 +227,31 @@ router.get('/users', isLoggedIn, (req, res, next) => {
         (user) => String(req.session.currentUser._id) != String(user._id)
       );
       console.log(userInfo);
-      res.render('users/user-profile', { userInfo });
+      res.render("users/user-profile", { userInfo });
     })
     .catch((err) => {
       console.log(err);
     });
 });
 
-router.get('/users/:id/edit', (req, res) => {
+router.get("/users/:id/edit", (req, res) => {
   const { id } = req.params;
-  console.log(id, 'heyyyyyy');
+  console.log(id, "heyyyyyy");
 
   User.findById(id)
     .then((userEdit) => {
       console.log(userEdit);
       console.log(userEdit.time);
 
-      res.render('users/edit-profile', userEdit);
+      res.render("users/edit-profile", userEdit);
     })
     .catch((err) => console.log(err));
 });
 
-router.post('/users/:id/edit', isLoggedIn, (req, res) => {
+router.post("/users/:id/edit", isLoggedIn, (req, res) => {
   const { id } = req.params;
   const { name, time, weight } = req.body;
-  console.log(req.body, 'yo');
+  console.log(req.body, "yo");
 
   User.findByIdAndUpdate(id, { name, time, weight }, { new: true })
     .then((updatedUserInfo) => {
@@ -259,36 +259,36 @@ router.post('/users/:id/edit', isLoggedIn, (req, res) => {
       //  overwrites current user data, the user who is logged in
       req.session.currentUser = updatedUserInfo;
       req.session.currentUser.weight = weight;
-      res.redirect('/myprofile');
+      res.redirect("/myprofile");
     })
     .catch((err) => {
       console.log(err);
     });
 });
 
-router.get('/foodList', (req, res, next) => {
+router.get("/foodList", (req, res, next) => {
   const myWeight = req.session.currentUser.weight;
-  console.log(myWeight, 'weight');
-  console.log(req.session, 'weight');
-  res.render('food-list');
+  console.log(myWeight, "weight");
+  console.log(req.session, "weight");
+  res.render("food-list");
 });
 //
 
-router.get('/users/:id/comment', (req, res, next) => {
+router.get("/users/:id/comment", (req, res, next) => {
   const { id } = req.params;
   console.log(id);
 
   User.findById(id)
     // this lets us use whatever is inside userComments
-    .populate('userComments')
+    .populate("userComments")
     .then((userInfo) => {
       // contains our populate
       console.log(userInfo);
-      res.render('users/solo-profile', userInfo);
+      res.render("users/solo-profile", userInfo);
     });
 });
 
-router.post('/users/:id/comment', (req, res, next) => {
+router.post("/users/:id/comment", (req, res, next) => {
   const { id } = req.params;
   const author = req.session.currentUser.id;
   const { content } = req.body;
@@ -322,9 +322,9 @@ router.post('/users/:id/comment', (req, res, next) => {
     });
 });
 
-router.post('/like/:id', (req, res, next) => {
+router.post("/like/:id", (req, res, next) => {
   const { id } = req.params;
-  console.log(id, 'ideeeeeee');
+  console.log(id, "ideeeeeee");
   User.findByIdAndUpdate(
     req.session.currentUser._id,
     {
@@ -349,7 +349,7 @@ router.post('/like/:id', (req, res, next) => {
       res.json({ success: false });
     });
 });
-router.post('/unlike/:id', (req, res, next) => {
+router.post("/unlike/:id", (req, res, next) => {
   const { id } = req.params;
   console.log(id);
   User.findByIdAndUpdate(
@@ -379,10 +379,10 @@ router.post('/unlike/:id', (req, res, next) => {
 });
 
 // use req.params to get the id when you see :id
-router.post('/likeEmoji/:id', isLoggedIn, (req, res, next) => {
+router.post("/likeEmoji/:id", isLoggedIn, (req, res, next) => {
   const { id } = req.params;
   Product.findById(id).then((product) => {
-    console.log(product, 'yoyoyoyo');
+    console.log(product, "yoyoyoyo");
     User.findByIdAndUpdate(
       req.session.currentUser._id,
       { $push: { productLikes: product._id } },
@@ -398,7 +398,7 @@ router.post('/likeEmoji/:id', isLoggedIn, (req, res, next) => {
           Product.findByIdAndUpdate(id, { $inc: { likedMe: 1 } }, { new: true })
             .then((totalLikes) => {
               req.session.currentUser.isLiked = true;
-              console.log(req.session, 'cehckinggg');
+              console.log(req.session, "cehckinggg");
               res.json({ success: true, totalLikes: totalLikes });
             })
             .catch((err) => {
@@ -414,7 +414,7 @@ router.post('/likeEmoji/:id', isLoggedIn, (req, res, next) => {
   });
 });
 
-router.post('/unlikeEmoji/:id', isLoggedIn, (req, res, next) => {
+router.post("/unlikeEmoji/:id", isLoggedIn, (req, res, next) => {
   const { id } = req.params;
   Product.findByIdAndUpdate(
     id,
@@ -425,7 +425,7 @@ router.post('/unlikeEmoji/:id', isLoggedIn, (req, res, next) => {
       Product.findByIdAndUpdate(id, { $inc: { likedMe: -1 } }, { new: true })
         .then((totalLikes) => {
           req.session.currentUser.isLiked = false;
-          console.log(req.session, 'cehckinggg');
+          console.log(req.session, "cehckinggg");
 
           console.log(req.session);
           res.json({ success: true, totalLikes: totalLikes });
@@ -441,12 +441,12 @@ router.post('/unlikeEmoji/:id', isLoggedIn, (req, res, next) => {
     });
 });
 
-router.get('/logout', isLoggedIn, (req, res, next) => {
-  console.log(req.session, 'hey1');
+router.get("/logout", isLoggedIn, (req, res, next) => {
+  console.log(req.session, "hey1");
   req.session.destroy((err) => {
     if (err) next(err);
-    console.log(req.session, 'hey2');
-    res.redirect('/');
+    console.log(req.session, "hey2");
+    res.redirect("/");
   });
 });
 
@@ -466,14 +466,14 @@ router.get('/logout', isLoggedIn, (req, res, next) => {
 //     .catch((err) => console.log(err));
 // });
 
-router.get('/workouts', (req, res, next) => {
+router.get("/workouts", (req, res, next) => {
   axios
     .get(`${process.env.EXERCISES_API}/exercises?page_1&_limit=500`)
     .then((api) => {
       // console.log(api);
 
       // console.log(api.data.results);
-      res.render('workouts.hbs', { api });
+      res.render("workouts.hbs", { api });
     })
     .catch((err) => console.log(err));
 });
